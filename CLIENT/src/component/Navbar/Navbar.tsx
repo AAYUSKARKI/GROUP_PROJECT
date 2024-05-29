@@ -1,4 +1,3 @@
-import React from 'react'
 
 function Navbar() {
   return (
@@ -8,14 +7,7 @@ function Navbar() {
    <div className="search-box">
    <input type="text" placeholder='Search here..' />
    </div>
- 
-
-
-
   </div>
-  
-  
-  
   </>
   )
 }
