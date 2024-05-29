@@ -5,13 +5,13 @@ THIS IS A GROUP PROJECT OF ECOMMERCE WEB APP DEVELOPMENT
 -AAYUS KARKI
 -AYUSH NIROULA
 -SANDESH LAKSAMBA
--SOURAV ROY
+-SAURAV ROY
 
 ## LINKS
 -https://github.com/aayuskarki
 -https://github.com/niroula
 -https://github.com/sandeshlaksamba
--https://github.com/souravroy
+-https://github.com/eyeblech
 
 
  
