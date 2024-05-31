@@ -6,7 +6,7 @@ import session from "express-session";
 import { User } from "./src/models/user.model.js";
 import passport from "passport";
 import passportGoogleOauth20 from "passport-google-oauth20";
-import AccessToken from "twilio/lib/jwt/AccessToken";
+
 const app = express();
 
 //google auth config
@@ -28,7 +28,7 @@ passport.use(new passportGoogleOauth20({
     callbackURL: "/auth/google/callback",
     scope: ["profile", "email"]   
 },
-async(AccessToken, refreshToken, profile, done) => {
+async(accessToken, refreshToken, profile, done) => {
     try {
         const existingUser = await User.findOne({googleId:profile.id})
         if(!existingUser){
@@ -77,9 +77,9 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 //routes import
-// import userRouter from './routes/user.routes.js'
-// import chatRouter from './routes/chat.routes.js'
+import userRouter from './src/routes/user.route.js'
+
 //routes declaration
-// app.use("/api/v1/users",userRouter)
-// app.use("/api/v1/chats",chatRouter)
+app.use("/api/v1/users",userRouter)
+
 export { app }

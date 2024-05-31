@@ -1,6 +1,7 @@
-import React from "react";
+
 import { FaUserCircle } from "react-icons/fa";
 function Login() {
+
   return (
     <section id="login " >
       <div className=" mx-auto container  ">
@@ -29,6 +30,7 @@ function Login() {
             </div>
 
             <button className="bg-blue-400 h-10 w-24 rounded-full">Login </button>
+      
           </form>
         </div>
       </div>
