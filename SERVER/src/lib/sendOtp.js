@@ -3,9 +3,9 @@ import dotenv from 'dotenv'
 
 dotenv.config('../../.env')
 console.log(process.env.PORT)
-const accountSid = 'AC15348005c01c70ebc173790de1402153';
-const authToken = '732900a7da68798bfd317f1b7900581b';
-const serviceId = "VAb5c43750fcb1e66d79f4ac888fef0218";
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const serviceId = process.env.TWILIO_SERVICE_SID;
 
 console.log(accountSid, authToken, serviceId)
 if (!accountSid || !authToken || !serviceId) {
