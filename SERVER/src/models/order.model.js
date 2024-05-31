@@ -7,7 +7,7 @@ const orderSchema = new Schema({
        ref: "User"
    },
    orderItems:[{
-       qty: Number,
+       quantity: Number,
        product: {
            type: Schema.Types.ObjectId,
            ref: "Product"

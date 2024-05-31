@@ -80,8 +80,16 @@ app.use(cookieParser())
 
 //routes import
 import userRouter from './src/routes/user.route.js'
+import cartRouter from './src/routes/cart.route.js'
+import orderRouter from './src/routes/order.route.js'
+import productRouter from './src/routes/product.route.js'
+import wishlistRouter from './src/routes/wishlist.route.js'
 
 //routes declaration
 app.use("/api/v1/users",userRouter)
+app.use("/api/v1/carts",cartRouter)
+app.use("/api/v1/orders",orderRouter)
+app.use("/api/v1/products",productRouter)
+app.use("/api/v1/wishlists",wishlistRouter)
 
 export { app }
