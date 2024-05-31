@@ -9,9 +9,13 @@ import passportGoogleOauth20 from "passport-google-oauth20";
 
 const app = express();
 
+//dotenv config
+dotenv.config({path : './.env'})
+console.log(process.env.CORS_ORIGIN);
+
 //google auth config
-const CLIENT_ID = "692481142961-rv9gdv5mpggllp8fjq20s078sh2aknk3.apps.googleusercontent.com";
-const CLIENT_SECRET = "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";
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 app.use(session({
     secret: "keyboard cat",
@@ -63,9 +67,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
     // Successful authentication, redirect home.
     res.redirect('http://localhost:5173');
   });
-//dotenv config
-dotenv.config({path : './.env'})
-console.log(process.env.CORS_ORIGIN);
+
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
