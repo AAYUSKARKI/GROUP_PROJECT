@@ -1,3 +1,6 @@
+import Addproduct from "@/admin/Addproduct";
+import Dashboard from "@/admin/Dashboard";
+import Vieworders from "@/admin/Vieworders";
 import App from "@/App";
 import Home from "@/components/Home/Home";
 import Login from "@/pages/Login";
@@ -14,14 +17,32 @@ const router = createBrowserRouter([
                 element: <Home/>
             },
             {
-                path:"Login",
+                path:"login",
                 element: <Login/>
             },
             {
-                path:"Sign-up",
+                path:"signup",
                 element: <SignUp/>
-            }
-        ]
+            },
+            {
+                path:"admin",
+                children:[
+                    {
+                        path:"dashboard",
+                        element: <Dashboard/>
+                    },
+                    {
+                        path:'add-product',
+                        element: <Addproduct/>
+                    },
+                    {
+                        path:'orders',
+                        element: <Vieworders/>
+                    }
+                ]
+                
+            },
+        ],
     }
 ])
 
