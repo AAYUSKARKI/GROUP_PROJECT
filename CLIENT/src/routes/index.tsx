@@ -5,6 +5,8 @@ import App from "@/App";
 import Home from "@/components/Home/Home";
 import Login from "@/pages/Login";
 import SignUp from "@/pages/SignUp";
+import Viewusers from "@/admin/Viewusers";
+import Viewproducts from "@/admin/Viewproducts";
 import {  createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
                     {
                         path:'orders',
                         element: <Vieworders/>
+                    },
+                    {
+                        path:'users',
+                        element: <Viewusers/>
+                    },
+                    {
+                        path:'products',
+                        element: <Viewproducts/>
                     }
                 ]
                 
