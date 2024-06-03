@@ -5,7 +5,6 @@ import { FaSearch, FaUser } from "react-icons/fa";
 function Navbar() {
 
   const [open, setOpen] = useState(false)
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<number | undefined>(undefined);
 
@@ -22,7 +21,10 @@ function Navbar() {
   const handleClick = () => {
     setOpen(!open)
   }
-
+ 
+  const handleuserIcon = ()=>{
+    setIsDropdownOpen(prevState => !prevState)
+  }
   const [search, setSearch] = useState('')
 
 
@@ -47,6 +49,8 @@ function Navbar() {
        name: "Shop", link: "/shop" 
     },
   ]
+
+
   return (
   <>
   <div className="bg-white border-b-2 border-slate-200 p-2 flex justify-between">
@@ -86,7 +90,7 @@ function Navbar() {
               <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">1</span>
             </div>
           <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <FaUser className=" cursor-pointer" />
+            <FaUser className=" cursor-pointer" onClick={handleuserIcon} />
             {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
                     <Link to={"/login"} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
