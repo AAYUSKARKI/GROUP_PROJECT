@@ -6,6 +6,7 @@ import {Apiresponse} from "../utils/apiresponse.js";
 
 const createProduct = asynchandler(async (req, res) => {
     const { name, description, category, price, discount, quantity,color,size } = req.body;
+    console.log(req.body);
 
     if (!name || !description || !category || !price || !discount || !quantity || !color || !size) {
         throw new Apierror(400, "All fields are required");

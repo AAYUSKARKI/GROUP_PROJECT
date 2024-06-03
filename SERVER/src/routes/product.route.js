@@ -19,7 +19,7 @@ import {
 const router = Router();
 
 
-router.route("/createproduct").post(upload.single("image"), verifyJWT, createProduct);
+router.route("/createproduct").post(upload.single("image"),createProduct);
 
 router.route("/getallproducts").get(getAllProducts);
 

@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
 function Login() {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: ""
   })
 
-  const handleOnChange = (e) =>{
+  const handleOnChange = (e:any) =>{
     const {name, value} = e.target
        setData((prev)=>{
       return{
@@ -19,7 +22,7 @@ function Login() {
       }
     })
   }
-const handlesubmit = (e)=>{
+const handlesubmit = (e:any)=>{
   e.preventDefault()
 }
   

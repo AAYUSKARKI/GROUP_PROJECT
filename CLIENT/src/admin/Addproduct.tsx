@@ -58,7 +58,7 @@ function Addproduct() {
 
         try {
             setLoading(true)
-            const response = await axios.post('http://localhost:7000/api/v1/product', formData)
+            const response = await axios.post('http://localhost:7000/api/v1/products/createproduct', formData)
             console.log(response.data)
             setLoading(false)
             toast.success('Product added successfully')
@@ -91,14 +91,28 @@ function Addproduct() {
     <div className='flex justify-center items-center'>
         <form 
         onSubmit={handleSubmit}
-        className='w-1/2 bg-slate-50 p-10 rounded-xl'
+        className='w-1/2  bg-slate-50 p-10 rounded-xl shadow-xl shadow-slate-400/20'
         >
-            <div className='flex justify-center items-center'>
+            
+            <div className='mt-4'>
                 <label
-                className='w-1/3 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue-600 hover:text-white'
+                className='block text-gray-700 text-sm font-bold mb-2'
                 >
-                    <IoCloudUploadOutline className='text-5xl'/>
-                    <span className='mt-2 text-base leading-normal'>Select Image</span>
+                    Product Name
+                </label>
+                <input
+                type='text'
+                name='name'
+                value={product.name}
+                onChange={handleChange}
+                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                />
+            </div>
+            <div className='flex flex-col-reverse justify-center items-center'>
+                <label
+                className=' flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue-600 hover:text-white'
+                >
+                    <IoCloudUploadOutline className='text-black'/>
                     <input
                     type='file'
                     name='image'
@@ -106,7 +120,7 @@ function Addproduct() {
                     onChange={handleUploadImage}
                     />
                 </label>
-                <div className='w-1/3'>
+                <div className=''>
                     <img
                     src={imagePreview}
                     alt='preview'
@@ -118,29 +132,15 @@ function Addproduct() {
                 <label
                 className='block text-gray-700 text-sm font-bold mb-2'
                 >
-                    Name
-                </label>
-                <input
-                type='text'
-                name='name'
-                value={product.name}
-                onChange={handleChange}
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                />
-            </div>
-            <div className='mt-4'>
-                <label
-                className='block text-gray-700 text-sm font-bold mb-2'
-                >
                     Description
                 </label>
                 <ReactQuill 
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' 
+                className='shadow appearance-none overflow-hidden border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' 
                 theme="snow"
-                style={{ height: '350px' }}
+                style={{ height: '400px' }}
                 value={product.description} 
                 onChange={(e) => setProduct({ ...product, description: e })} 
-                />;
+                />
             </div>
             <div className='mt-4'>
                 <label
