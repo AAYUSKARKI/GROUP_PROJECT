@@ -67,9 +67,8 @@ function Viewproducts() {
                         <td className="px-6 py-4 border border-slate-300 dark:border-slate-700">
                             {product.price}
                         </td>
-                        <td className="px-6 py-4 border border-slate-300 dark:border-slate-700 flex gap-2 items-center justify-center">
-                            <button className="text-blue-500 ">EDIT</button>
-                            <button className="text-red-500">DELETE</button>
+                        <td className="px-6 py-4 border border-slate-300 dark:border-slate-700">
+                            {product.discount}
                         </td>
                         <td className="px-6 py-4 border border-slate-300 dark:border-slate-700">
                             {product.quantity}
@@ -79,6 +78,10 @@ function Viewproducts() {
                         </td>
                         <td className="px-6 py-4 border border-slate-300 dark:border-slate-700">
                             {product.size}
+                        </td>
+                        <td className="px-6 py-4 border border-slate-300 dark:border-slate-700 flex gap-2 items-center justify-center">
+                            <button className="text-blue-500 ">EDIT</button>
+                            <button className="text-red-500">DELETE</button>
                         </td>
                     </tr>
                 ))}

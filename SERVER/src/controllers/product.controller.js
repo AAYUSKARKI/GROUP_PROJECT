@@ -64,8 +64,8 @@ const getAllProducts = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
+            products,
             "products fetched successfully",
-            products
         )
     )
 });

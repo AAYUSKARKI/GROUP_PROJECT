@@ -7,7 +7,7 @@ const useGetproducts = () => {
 
     const getUsers = async () => {
         const response = await axios.get("http://localhost:7000/api/v1/products/getallproducts")
-        console.log(response.data.data)
+        console.log('response from products',response.data.data)
         setProducts(response.data.data)
     }
 

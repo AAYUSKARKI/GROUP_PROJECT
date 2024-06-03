@@ -1,13 +1,13 @@
-import Navbar from "@/components/Navbar/Navbar"
-import Cards from '@/components/Cards/Cards'
-import Login from "../../pages/Login"
-import HomeCard from "../Card/HomeCard"
+
+// import Cards from '@/components/Cards/Cards'
+import HomeCards from "../Cards/Homecards"
 function Home() {
   return (
    <>
-  
-    <HomeCard/>
-   <Cards/>
+  <div className="flex gap-[110px]">
+  <HomeCards/>
+  </div>
+   {/* <Cards/> */}
    </>
   )
 }
