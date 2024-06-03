@@ -82,7 +82,7 @@ const handlesubmit = (e:any)=>{
             <p>
               Don't have Account ?{" "}
               <Link
-                to={"/Sign-up"}
+                to={"/signup"}
                 className=" hover:underline text-blue-600 font-bold"
               >
                 Register Here
