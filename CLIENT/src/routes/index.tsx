@@ -28,6 +28,10 @@ const router = createBrowserRouter([
                 element: <SignUp/>
             },
             {
+                path:'carts',
+                element:<Cartsdetail/>
+                },
+            {
                 path:"admin",
                 children:[
                     {
@@ -50,10 +54,13 @@ const router = createBrowserRouter([
                         path:'products',
                         element: <Viewproducts/>
                     },
+<<<<<<< HEAD
+=======
                     {
                         path:'update-product/:id',
                         element: <Updateproduct/>
                     }
+>>>>>>> bb4722adf037dd8542aaa03bf37e590656326eaf
                 ]
                 
             },
