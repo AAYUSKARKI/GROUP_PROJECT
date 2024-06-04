@@ -8,6 +8,7 @@ import SignUp from "@/pages/SignUp";
 import Viewusers from "@/admin/Viewusers";
 import Viewproducts from "@/admin/Viewproducts";
 import {  createBrowserRouter } from "react-router-dom";
+import Updateproduct from "@/admin/Updateproduct";
 
 const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
                     {
                         path:'products',
                         element: <Viewproducts/>
+                    },
+                    {
+                        path:'update-product/:id',
+                        element: <Updateproduct/>
                     }
                 ]
                 
