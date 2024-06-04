@@ -2,6 +2,7 @@ import { useState,useRef } from "react";
 import { Link } from "react-router-dom"
 import { RiShoppingCart2Line, RiHeartLine } from 'react-icons/ri';
 import { FaSearch, FaUser } from "react-icons/fa";
+import debounce from 'lodash'
 function Navbar() {
 
   const [open, setOpen] = useState(false)
@@ -26,6 +27,10 @@ function Navbar() {
     setIsDropdownOpen(prevState => !prevState)
   }
   const [search, setSearch] = useState('')
+
+  //http://localhost:7000/api/v1/products/autocompletesearch?key=a
+
+  const suggestions = debounce(`http://localhost:7000/api/v1/products/autocompletesearch?key=${search}`, 500)
 
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

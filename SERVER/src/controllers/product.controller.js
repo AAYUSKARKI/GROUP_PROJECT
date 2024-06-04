@@ -79,22 +79,46 @@ const getProductById = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
+            product,
             "product fetched successfully",
-            product
         )
     )
 });
 
 const updateProduct = asynchandler(async (req, res) => {
     const { name, description, category, price, discount, quantity,color,size } = req.body;
+    console.log(req.body);
     if (!name || !description || !category || !price || !discount || !quantity || !color || !size) {
         throw new Apierror(400, "All fields are required");
     }
 
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true,
-    });
+    const imagelocalpath = req.file.path;
+
+    if(!imagelocalpath) 
+        throw new Apierror(400, "image is required")
+
+
+    const image = await uploadOnCloudinary(imagelocalpath);
+
+    if(!image) 
+        throw new Apierror(400, "image is not uploaded")
+
+    const product = await Product.findByIdAndUpdate(req.params.id,
+        {
+            name,
+            description,
+            category,
+            price,
+            image:image.url,
+            discount,
+            quantity,
+            color,
+            size
+        },
+        {
+            new: true,
+            runValidators: true,
+        });
 
     if (!product) {
         throw new Apierror(404, "product not found");
@@ -213,6 +237,20 @@ const rateProduct = asynchandler(async (req, res) => {
     )
 });
 
+const AutoCompletesearch = asynchandler(async (req, res) => {
+    const products = await Product.find({ name: { $regex: req.query.key, $options: "i" } });
+    if (!products) {
+        throw new Apierror(404, "products not found");
+    }
+    res.status(200).json(
+        new Apiresponse(
+            200,
+            products,
+            "products fetched successfully",
+        )
+    )
+});
+
 export {
     createProduct,
     getAllProducts,
@@ -224,5 +262,6 @@ export {
     getProductByCategory,
     getTopProducts,
     getProductByDiscount,
-    rateProduct
+    rateProduct,
+    AutoCompletesearch
 }

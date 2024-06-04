@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import Dashboard from './Dashboard'
 import axios from 'axios'
 import toast from 'react-hot-toast'
@@ -6,11 +6,16 @@ import { IoCloudUploadOutline } from 'react-icons/io5'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useParams } from 'react-router-dom'
+import useGetproduct from '@/hooks/useGetprouct'
 
 function Updateproduct() {
     
-    const {id} = useParams()
     
+    const {id} = useParams()
+    const {Singleproduct}= useGetproduct(id as string)
+    console.log(id)
+    console.log(Singleproduct.name)
+
     const [loading, setLoading] = useState(false)
     const [product, setProduct] = useState({
         name: '',
@@ -20,10 +25,28 @@ function Updateproduct() {
         discount: 0,
         quantity: 0,
         color: '',
-        size:[] as string[],
+        size: Singleproduct.size || [],
     })
+    useEffect(() => {
+        if (Singleproduct) {
+            setProduct({
+                name: Singleproduct.name || '',
+                description: Singleproduct.description || '',
+                category: Singleproduct.category || '',
+                price: Singleproduct.price || 0,
+                discount: Singleproduct.discount || 0,
+                quantity: Singleproduct.quantity || 0,
+                color: Singleproduct.color || '',
+                size: Singleproduct.size || [],
+            });
+            setImage(Singleproduct.image);
+            setImagePreview(Singleproduct.image);
+        }
+    }, [Singleproduct]);
+
+    console.log('product state is',product)
     const [image, setImage] = useState('')
-    const [imagePreview, setImagePreview] = useState('')
+    const [imagePreview, setImagePreview] = useState(image)
 
     const sizeOptions = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']
 
@@ -61,7 +84,7 @@ function Updateproduct() {
 
         try {
             setLoading(true)
-            const response = await axios.post('http://localhost:7000/api/v1/products/updateproduct', formData)
+            const response = await axios.put(`http://localhost:7000/api/v1/products/updateproduct/${id}`, formData)
             console.log(response.data)
             setLoading(false)
             toast.success('Product added successfully')

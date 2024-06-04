@@ -12,7 +12,8 @@ import {
     getProductByCategory,
     getTopProducts,
     getProductByDiscount,
-    rateProduct
+    rateProduct,
+    AutoCompletesearch
 } from "../controllers/product.controller.js";
 
 
@@ -25,9 +26,9 @@ router.route("/getallproducts").get(getAllProducts);
 
 router.route("/getproductbyid/:id").get(getProductById);
 
-router.route("/updateproduct/:id").put(verifyJWT, updateProduct);
+router.route("/updateproduct/:id").put(upload.single("image"),updateProduct);
 
-router.route("/deleteproduct/:id").delete(verifyJWT, deleteProduct);
+router.route("/deleteproduct/:id").delete(deleteProduct);
 
 router.route("/searchproduct").get(searchProduct);
 
@@ -40,5 +41,7 @@ router.route("/gettopproducts").get(getTopProducts);
 router.route("/getproductbydiscount").get(getProductByDiscount);
 
 router.route("/rateproduct/:id").post(verifyJWT, rateProduct);
+
+router.route("/autocompletesearch").get(AutoCompletesearch);
 
 export default router
