@@ -1,4 +1,6 @@
 import useGetproducts from "@/hooks/useGetproducts";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 function Viewproducts() {
 
     interface Product {
@@ -14,8 +16,21 @@ function Viewproducts() {
     }
 
     const {products} = useGetproducts() as {products: Product[]};
+    const navigate = useNavigate()
 
-    console.log(products)
+    const handleUpdate = (id: string) => {
+        navigate(`/admin/update-product/${id}`)
+    }
+
+    const handleDelete = async (id: string) => {
+        try {
+            const response = await axios.delete(`http://localhost:7000/api/v1/products/deleteproduct/${id}`)
+            console.log(response.data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
   return (
     <>
     <h1 className="text-3xl font-bold underline text-center text-slate-900 dark:text-slate-50">ALL PRODUCTS OF THE LUCIDMERCH</h1>
@@ -80,8 +95,8 @@ function Viewproducts() {
                             {product.size}
                         </td>
                         <td className="px-6 py-4 border border-slate-300 dark:border-slate-700 flex gap-2 items-center justify-center">
-                            <button className="text-blue-500 ">EDIT</button>
-                            <button className="text-red-500">DELETE</button>
+                            <button className="text-blue-500 " onClick={() => handleUpdate(product._id)}>EDIT</button>
+                            <button className="text-red-500" onClick={() => handleDelete(product._id)}>DELETE</button>
                         </td>
                     </tr>
                 ))}
