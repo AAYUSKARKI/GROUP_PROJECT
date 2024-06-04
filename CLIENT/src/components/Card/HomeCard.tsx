@@ -1,8 +1,10 @@
 import parse from 'html-react-parser';
+import { useNavigate } from 'react-router-dom';
 
 function HomeCard({product} : any) {
+  const navigate = useNavigate();
   return (
-    <div  className='w-full min-w-[290px] md:min-w-[320px] max-w-[290px] md:max-w-[320px] h-56 bg-white rounded-md shadow flex  m-7'>
+    <div onClick={() => navigate(`/product/${product._id}`)} className='cursor-pointer w-full min-w-[290px] md:min-w-[320px] max-w-[290px] md:max-w-[320px] h-56 bg-white rounded-md shadow flex  m-7'>
         <div className='bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px] mx-1 '>
             <img src={product.image} className='object-scale-down w-full h-full hover:scale-110 transition-all mix-blend-multiply  '/>
         </div>

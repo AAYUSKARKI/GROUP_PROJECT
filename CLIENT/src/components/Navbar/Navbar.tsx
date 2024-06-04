@@ -1,13 +1,15 @@
-import { useState,useRef } from "react";
+import { useState,useRef,useEffect } from "react";
 import { Link } from "react-router-dom"
 import { RiShoppingCart2Line, RiHeartLine } from 'react-icons/ri';
 import { FaSearch, FaUser } from "react-icons/fa";
-import debounce from 'lodash'
+import axios from "axios";
 function Navbar() {
 
   const [open, setOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<number | undefined>(undefined);
+  const [search, setSearch] = useState('')
+  const [suggestions, setSuggestions] = useState([])
 
     const handleMouseEnter = () => {
         clearTimeout(dropdownRef.current);
@@ -26,16 +28,30 @@ function Navbar() {
   const handleuserIcon = ()=>{
     setIsDropdownOpen(prevState => !prevState)
   }
-  const [search, setSearch] = useState('')
+ 
 
   //http://localhost:7000/api/v1/products/autocompletesearch?key=a
 
-  const suggestions = debounce(`http://localhost:7000/api/v1/products/autocompletesearch?key=${search}`, 500)
+  const fetchSuggestions = async () => {
+    const response = await axios.get(`http://localhost:7000/api/v1/products/autocompletesearch?key=${search}`)
+    console.log(response.data.data)
+    setSuggestions(response.data.data)
+  }
 
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
+
+  const handleInputBlur = () => {
+    setSuggestions([])
+  }
+
+  useEffect(() => {
+    if (search) {
+      fetchSuggestions()
+    }
+  }, [search])
 
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -82,9 +98,17 @@ function Navbar() {
               name="search"
               id="search"
               value={search}
+              onBlur={handleInputBlur} 
               className="w-[200px] p-1 rounded-md text-black appearance-none bg-white border-black focus:outline-none focus:shadow-outline" 
               onChange={handleSearch}
               />
+              <ul className="absolute bg-white p-2 w-[200px] rounded-md text-black border-black flex flex-col gap-1 mt-1">
+                { suggestions && suggestions.map((suggestion: any) => (
+                <li key={suggestion._id} className="hover:bg-slate-200">
+                    <Link to={`/product/${suggestion.id}`}>{suggestion.name}</Link>
+                </li>
+                ))}
+              </ul>
                </form>
               <FaSearch onClick={handleClick}/>
               </>

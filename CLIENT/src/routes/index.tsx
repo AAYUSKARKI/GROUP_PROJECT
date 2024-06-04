@@ -9,6 +9,8 @@ import Viewusers from "@/admin/Viewusers";
 import Viewproducts from "@/admin/Viewproducts";
 import {  createBrowserRouter } from "react-router-dom";
 import Updateproduct from "@/admin/Updateproduct";
+import Cartsdetail from "@/components/Carts/cartsdetail";
+import CardDetailsDisplay from "@/components/Card/CardDetailsDisplay";
 
 const router = createBrowserRouter([
     {
@@ -30,7 +32,11 @@ const router = createBrowserRouter([
             {
                 path:'carts',
                 element:<Cartsdetail/>
-                },
+            },
+            {
+                path:'product/:id',
+                element:<CardDetailsDisplay/>
+            },
             {
                 path:"admin",
                 children:[
@@ -58,8 +64,7 @@ const router = createBrowserRouter([
                         path:'update-product/:id',
                         element: <Updateproduct/>
                     }
-                ]
-                
+                ]       
             },
         ],
     }

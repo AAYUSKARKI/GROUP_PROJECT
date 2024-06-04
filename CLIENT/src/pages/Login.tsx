@@ -3,31 +3,48 @@ import { FaUserCircle } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link,useNavigate } from "react-router-dom";
-import axios from "axios";
-import toast from "react-hot-toast";
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import Cookies from 'js-cookie'
+import { useDispatch} from 'react-redux'
+import { setuser } from '../redux/userSlice'
+
 function Login() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
-  const [data, setData] = useState({
+  const [loading, setLoading] = useState(false);
+
+  const [user, setUser] = useState({
     email: "",
-    password: ""
-  })
+    password: "",
+})
+
+  const dispatch = useDispatch()
 
   const handleOnChange = (e:any) =>{
-    const {name, value} = e.target
-       setData((prev)=>{
-      return{
-        ...prev,
-        [name] : value
-      }
-    })
+    setUser({ ...user, [e.target.name]: e.target.value })
   }
-const handlesubmit = (e:any)=>{
-  e.preventDefault()
+const handlesubmit = async(e:any)=>{
+  e.preventDefault();
+  try {
+
+    setLoading(true)
+    const res = await axios.post("http://localhost:7000/api/v1/users/login", user)
+    console.log('data is', res.data.data)
+    dispatch(setuser(res.data.data))
+    console.log(res.data.data.accesstoken, 'accesstoken')
+    Cookies.set("accesstoken", res.data.data.accesstoken)
+    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.accesstoken}`
+    toast.success(res.data.message)
+    navigate("/chat")
+    setLoading(false)
+}
+catch (error: any) {
+    setLoading(false)
+    toast.error(error.message)
+}
 }
   
-
-  console.log("user data", data)
   return (
     <section id="login ">
       <div className=" mx-auto container p-4 ">
@@ -44,7 +61,7 @@ const handlesubmit = (e:any)=>{
               <input
                 type="email"
                 name="email"
-                value={data.email}
+                value={user.email}
                 onChange={handleOnChange}
                 className="bg-slate-300 rounded w-full h-10 text-black p-2"
                 placeholder="Enter your email"
@@ -58,7 +75,7 @@ const handlesubmit = (e:any)=>{
                   type={showPassword ? "text" : "password"}
                   onChange={handleOnChange}
                   name="password"
-                  value={data.password}
+                  value={user.password}
                   placeholder="Enter your password "
                   required
                   className="bg-slate-300 rounded w-full h-10 text-black p-2"
@@ -74,10 +91,13 @@ const handlesubmit = (e:any)=>{
             <p className="block w-fit ml-auto hover:underline hover:text-blue-600 text-blue-600 font-bold">
               forgot password ?
             </p>
-
+           {
+            loading?
+            <span className="loading loading-spinner loading-lg flex items-center justify-center"></span>:
             <button className="bg-blue-600 hover:bg-blue-500 transition-all h-10 w-full rounded-full font-bold mt-7">
               Login
             </button>
+           }
 
             <p>
               Don't have Account ?{" "}
