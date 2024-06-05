@@ -36,7 +36,7 @@ const handlesubmit = async(e:any)=>{
     Cookies.set("accesstoken", res.data.data.accesstoken)
     axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.accesstoken}`
     toast.success(res.data.message)
-    navigate("/chat")
+    navigate("/")
     setLoading(false)
 }
 catch (error: any) {

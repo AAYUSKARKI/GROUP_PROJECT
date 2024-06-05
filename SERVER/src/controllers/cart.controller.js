@@ -5,6 +5,7 @@ import {Apiresponse} from "../utils/apiresponse.js";
 
 const createCart = asynchandler(async (req, res) => {
     const { quantity, product } = req.body;
+    console.log(req.body);
     const user = req.user._id;
 
     if (!quantity || !product) {
@@ -20,8 +21,8 @@ const createCart = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
-            "Cart created successfully",
-            cart
+            cart,
+            "Cart created successfully"
         )
     )
 })

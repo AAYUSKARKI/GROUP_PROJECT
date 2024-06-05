@@ -81,7 +81,7 @@ function SignUp() {
       };
 
       const handleGoogleLogin = () => {
-        window.open("http://localhost:7000/api/v1/auth/google/callback", "_self");
+        window.open("http://localhost:7000/auth/google/login", "_self");
       };
 
 

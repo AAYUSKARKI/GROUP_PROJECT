@@ -3,13 +3,21 @@ import { Link } from "react-router-dom"
 import { RiShoppingCart2Line, RiHeartLine } from 'react-icons/ri';
 import { FaSearch, FaUser } from "react-icons/fa";
 import axios from "axios";
+import { useSelector } from "react-redux";
+// import useGetgoogleloginuser from "@/hooks/useGetgoogleloginuser";
 function Navbar() {
+
+  // useGetgoogleloginuser()
 
   const [open, setOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<number | undefined>(undefined);
   const [search, setSearch] = useState('')
   const [suggestions, setSuggestions] = useState([])
+
+  const { user } = useSelector((state: any) => state.user)
+  console.log('user', user.user)
+
 
     const handleMouseEnter = () => {
         clearTimeout(dropdownRef.current);
@@ -19,7 +27,7 @@ function Navbar() {
     const handleMouseLeave = () => {
         dropdownRef.current = window.setTimeout(() => {
             setIsDropdownOpen(false);
-        }, 5000);
+        }, 500);
     };
   const handleClick = () => {
     setOpen(!open)
@@ -79,10 +87,10 @@ function Navbar() {
         <p className="text-2xl text-black font-bold "><Link to={"/"}>Lucid Merch</Link></p>
         <p className="text-xs text-black font-bold">" Merch for Nerds "</p>
     </div>
-    <div className="flex items-center gap-10">
-        <ul className="flex gap-[2.5rem]">
+    <div className="flex items-center gap-10 ">
+        <ul className="flex gap-[2.5rem] mr-[52px]">
             {links.map((link) => (
-                <li key={link.name}>
+                <li key={link.name} className="cursor-pointer text-2xl text-black hover:text-slate-500 ">
                     <Link to={link.link}>{link.name}</Link>
                 </li>
             ))}
@@ -99,10 +107,10 @@ function Navbar() {
               id="search"
               value={search}
               onBlur={handleInputBlur} 
-              className="w-[200px] p-1 rounded-md text-black appearance-none bg-white border-black focus:outline-none focus:shadow-outline" 
+              className="w-[300px] p-1 rounded-md text-black appearance-none bg-slate-100 border-black focus:outline-none focus:shadow-outline" 
               onChange={handleSearch}
               />
-              <ul className="absolute bg-white p-2 w-[200px] rounded-md text-black border-black flex flex-col gap-1 mt-1">
+              <ul className="absolute bg-white p-2 w-[300px] rounded-md text-black border-black flex flex-col gap-1 mt-1">
                 { suggestions && suggestions.map((suggestion: any) => (
                 <li key={suggestion._id} className="hover:bg-slate-200">
                     <Link to={`/product/${suggestion.id}`}>{suggestion.name}</Link>
@@ -110,27 +118,41 @@ function Navbar() {
                 ))}
               </ul>
                </form>
-              <FaSearch onClick={handleClick}/>
+              <FaSearch className="cursor-pointer w-8 h-8" onClick={handleClick}/>
               </>
-              : <FaSearch onClick={handleClick}/>
+              : <FaSearch className="cursor-pointer w-8 h-8" onClick={handleClick}/>
           }
           <div className="relative">
-              <RiHeartLine />
+              <RiHeartLine  className=" cursor-pointer w-8 h-8"/>
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">1</span>
+            </div>
+            <div className="relative">
+              <RiShoppingCart2Line  className=" cursor-pointer w-8 h-8"/>
               <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">1</span>
             </div>
           <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <FaUser className=" cursor-pointer" onClick={handleuserIcon} />
+            {
+              user.user.avatar ? 
+              <img 
+               src={user.user.avatar} 
+               className="w-10 h-10 rounded-full cursor-pointer" 
+               onClick={handleuserIcon} />
+              :
+              <FaUser className=" cursor-pointer w-8 h-8" onClick={handleuserIcon} />}
             {isDropdownOpen && (
+              user.user ? (
+                <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
+                  <Link to={`/profile/${user.user._id}`} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Profile</Link>
+                  <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Logout</Link>
+                </div>
+              ) : (
                 <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
                     <Link to={"/login"} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
                     <Link to={"/register"} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Register</Link>
                 </div>
+              )
             )}
         </div>
-        <div className="relative">
-              <RiShoppingCart2Line />
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">1</span>
-            </div>
         </div>
     </div>
   </div>
