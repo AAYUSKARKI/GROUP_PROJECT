@@ -106,6 +106,7 @@ function Addproduct() {
                 value={product.name}
                 onChange={handleChange}
                 className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
                 />
             </div>
             <div className='flex flex-col-reverse justify-center items-center'>
@@ -118,6 +119,7 @@ function Addproduct() {
                     name='image'
                     className='hidden'
                     onChange={handleUploadImage}
+                    required
                     />
                 </label>
                 <div className=''>
@@ -154,6 +156,7 @@ function Addproduct() {
                 value={product.category}
                 onChange={handleChange}
                 className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
                 />
             </div>
             <div className='mt-4'>
@@ -168,6 +171,7 @@ function Addproduct() {
                 value={product.price}
                 onChange={handleChange}
                 className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                required
                 />
             </div>
             <div className='mt-4'>

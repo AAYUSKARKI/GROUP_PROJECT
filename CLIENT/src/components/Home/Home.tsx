@@ -4,7 +4,7 @@ import HomeCards from "../Cards/Homecards"
 function Home() {
   return (
    <>
-  <div className="flex gap-[110px]">
+  <div className="flex gap-[10px] overflow-scroll scrollbar-hide">
   <HomeCards/>
   </div>
    {/* <Cards/> */}
