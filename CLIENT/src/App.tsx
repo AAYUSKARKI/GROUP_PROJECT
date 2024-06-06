@@ -12,6 +12,8 @@ import Cartsdetail from '@/components/Carts/cartsdetail';
 import CardDetailsDisplay from '@/components/Card/CardDetailsDisplay';
 import Navbar from './components/Navbar/Navbar';
 import OrderForm from './pages/Orderfrom';
+import Paymentpage from './pages/Paymentpage';
+
 function App() {
   return (
    <>
@@ -23,6 +25,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/carts" element={<Cartsdetail />} />
         <Route path="/product/:id" element={<CardDetailsDisplay />} />
+        <Route path="/payment" element={<Paymentpage />} />
         <Route path="/order/:id" element={<OrderForm />} />
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />

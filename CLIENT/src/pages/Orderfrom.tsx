@@ -1,12 +1,13 @@
 import { useState } from "react";
 import esewa from '../assets/esewa.jpg'
 import Orderedproduct from "./Orderedproduct";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import useGetcartbyid from "@/hooks/useGetcartbyid";
 
 const OrderForm = () => {
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
 
   const { cart } = useGetcartbyid(id as string);
@@ -28,7 +29,7 @@ const OrderForm = () => {
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Here you can handle the form submission, e.g., send data to server
-    console.log(formData);
+    navigate("/payment")
   };
 
   return (
