@@ -6,6 +6,7 @@ import session from "express-session";
 import { User } from "./src/models/user.model.js";
 import passport from "passport";
 import passportGoogleOauth20 from "passport-google-oauth20";
+import esewa from "./src/payment/esewa.js";
 
 const app = express();
 
@@ -82,6 +83,8 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
     }
   })
 
+  app.get('/pay/esewa',esewa)
+
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -105,5 +108,8 @@ app.use("/api/v1/carts",cartRouter)
 app.use("/api/v1/orders",orderRouter)
 app.use("/api/v1/products",productRouter)
 app.use("/api/v1/wishlists",wishlistRouter)
+app.use("*", (req, res) => {
+    res.status(404).json({message: "Not Found"})
+})
 
 export { app }

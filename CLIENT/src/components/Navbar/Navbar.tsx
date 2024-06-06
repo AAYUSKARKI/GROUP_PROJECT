@@ -96,11 +96,11 @@ function Navbar() {
                 </li>
             ))}
             {
-              user.user.role === "admin" && (
+              user ? user.user.role === "admin" && (
                 <li className="cursor-pointer text-2xl text-black hover:text-slate-500 ">
                   <Link to={'/admin'}>Admin</Link>
                 </li>
-              )
+              ): null
             }
         </ul>
         <div className="flex gap-[1.2rem]">
@@ -140,7 +140,7 @@ function Navbar() {
             </div>
           <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             {
-              user.user.avatar ? 
+              user?.user?.avatar ? 
               <img 
                src={user.user.avatar} 
                className="w-10 h-10 rounded-full cursor-pointer" 
