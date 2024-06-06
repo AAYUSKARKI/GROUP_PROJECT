@@ -37,8 +37,8 @@ const getCart = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
-            "Cart fetched successfully",
-            cart
+            cart,
+            "Cart fetched successfully"
         )
     )
 })
@@ -63,8 +63,9 @@ const updateCart = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
-            "Cart updated successfully",
-            cart
+            cart,
+            "Cart updated successfully"
+            
         )
     )
 })
@@ -83,5 +84,19 @@ const deleteCart = asynchandler(async (req, res) => {
     )
 })
 
+const getSingleCart = asynchandler(async (req, res) => {
+    const cart = await Cart.findById(req.params.id).populate("product").populate("user");
+    if (!cart) {
+        throw new Apierror(404, "Cart not found");
+    }
+    res.status(200).json(
+        new Apiresponse(
+            200,
+            cart,
+            "Cart fetched successfully"
+        )
+    )
+})
 
-export { createCart, getCart, updateCart, deleteCart }
+
+export { createCart, getCart, updateCart, deleteCart, getSingleCart };

@@ -11,7 +11,7 @@ import Updateproduct from '@/admin/Updateproduct';
 import Cartsdetail from '@/components/Carts/cartsdetail';
 import CardDetailsDisplay from '@/components/Card/CardDetailsDisplay';
 import Navbar from './components/Navbar/Navbar';
-
+import OrderForm from './pages/Orderfrom';
 function App() {
   return (
    <>
@@ -23,6 +23,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/carts" element={<Cartsdetail />} />
         <Route path="/product/:id" element={<CardDetailsDisplay />} />
+        <Route path="/order/:id" element={<OrderForm />} />
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/add-product" element={<Addproduct />} />

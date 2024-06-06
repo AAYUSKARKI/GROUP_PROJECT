@@ -4,10 +4,13 @@ import { RiShoppingCart2Line, RiHeartLine } from 'react-icons/ri';
 import { FaSearch, FaUser } from "react-icons/fa";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import useGetcarts from "@/hooks/useGetcarts";
 // import useGetgoogleloginuser from "@/hooks/useGetgoogleloginuser";
 function Navbar() {
 
   // useGetgoogleloginuser()
+
+  const { carts } = useGetcarts()
 
   const [open, setOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -16,8 +19,6 @@ function Navbar() {
   const [suggestions, setSuggestions] = useState([])
 
   const { user } = useSelector((state: any) => state.user)
-  console.log('user', user.user)
-
 
     const handleMouseEnter = () => {
         clearTimeout(dropdownRef.current);
@@ -94,6 +95,13 @@ function Navbar() {
                     <Link to={link.link}>{link.name}</Link>
                 </li>
             ))}
+            {
+              user.user.role === "admin" && (
+                <li className="cursor-pointer text-2xl text-black hover:text-slate-500 ">
+                  <Link to={'/admin'}>Admin</Link>
+                </li>
+              )
+            }
         </ul>
         <div className="flex gap-[1.2rem]">
           {
@@ -127,8 +135,8 @@ function Navbar() {
               <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">1</span>
             </div>
             <div className="relative">
-              <RiShoppingCart2Line  className=" cursor-pointer w-8 h-8"/>
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">1</span>
+              <Link to={"/carts"}><RiShoppingCart2Line  className=" cursor-pointer w-8 h-8"/></Link>
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">{carts.length}</span>
             </div>
           <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             {
