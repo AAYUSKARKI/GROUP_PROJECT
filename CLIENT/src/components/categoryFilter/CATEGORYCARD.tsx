@@ -4,7 +4,7 @@ import { FaPlus, FaMinus } from 'react-icons/fa';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-function HomeCard({product} : any) {
+function Categorycard({product} : any) {
   const navigate = useNavigate();
 
   const [qty, setQty] = useState(1);
@@ -56,4 +56,4 @@ function HomeCard({product} : any) {
   )
 }
 
-export default HomeCard
+export default Categorycard

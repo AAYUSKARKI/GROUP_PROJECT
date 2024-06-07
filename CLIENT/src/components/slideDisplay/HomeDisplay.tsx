@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import banner1 from "../../../../assests/banner3.jpeg";
 import banner2 from "../../../../assests/banner4.jpeg";
@@ -8,7 +8,7 @@ import bigbanner2 from "../../../../assests/banner2.jpeg";
 function HomeDisplay() {
   const [currentImage, setCurrentImage] = useState(0);
 
-  const DesktopImages = [bigbanner1, banner1, banner2];
+  const DesktopImages = [bigbanner1, bigbanner2, banner1, banner2];
 
   const nextImage = () => {
     if (DesktopImages.length - 1 > currentImage) {
@@ -48,6 +48,7 @@ function HomeDisplay() {
           {DesktopImages.map((imageUrl, index) => {
             return (
               <div
+                key={index}
                 className="w-full h-full min-w-full min-h-full transition-all"
                 style={{ transform: `translateX(-${currentImage * 100}%)` }}
               >

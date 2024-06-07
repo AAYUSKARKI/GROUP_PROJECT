@@ -184,8 +184,8 @@ const getProductByCategory = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
-            "products fetched successfully",
-            products
+            products,
+            "products fetched successfully"
         )
     )
 });

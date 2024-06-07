@@ -12,6 +12,7 @@ import Cartsdetail from '@/components/Carts/cartsdetail';
 import CardDetailsDisplay from '@/components/Card/CardDetailsDisplay';
 import Navbar from './components/Navbar/Navbar';
 import OrderForm from './pages/Orderfrom';
+import CategorylandingPage from './components/categoryFilter/CategorylandingPage';
 import Paymentpage from './pages/Paymentpage';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/product/:id" element={<CardDetailsDisplay />} />
         <Route path="/payment" element={<Paymentpage />} />
         <Route path="/order/:id" element={<OrderForm />} />
+        <Route path="/category/:category" element={<CategorylandingPage />} />
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/add-product" element={<Addproduct />} />
@@ -34,6 +36,7 @@ function App() {
         <Route path="/admin/users" element={<Viewusers />} />
         <Route path="/admin/view-products" element={<Viewproducts />} />
         <Route path="/admin/update-product/:id" element={<Updateproduct />} />
+
       </Routes>
     </BrowserRouter>
    </>
