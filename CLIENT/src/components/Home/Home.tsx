@@ -10,6 +10,7 @@ function Home() {
   <div className="gap-[10px] grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-[7px] ">
   <HomeCards/>
   </div>
+  </div>
    {/* <Cards/> */}
    </>
   )
