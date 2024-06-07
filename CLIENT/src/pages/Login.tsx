@@ -33,7 +33,11 @@ const handlesubmit = async(e:any)=>{
     console.log('data is', res.data.data)
     dispatch(setuser(res.data.data))
     console.log(res.data.data.accesstoken, 'accesstoken')
-    Cookies.set("accesstoken", res.data.data.accesstoken)
+    Cookies.set("accesstoken", res.data.data.accesstoken,{
+      expires: 7,
+      path: "/",
+      secure: false
+    })
     axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.accesstoken}`
     toast.success(res.data.message)
     navigate("/")

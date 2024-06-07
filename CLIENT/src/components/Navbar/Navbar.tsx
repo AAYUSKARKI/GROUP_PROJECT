@@ -3,15 +3,20 @@ import { Link } from "react-router-dom"
 import { RiShoppingCart2Line, RiHeartLine } from 'react-icons/ri';
 import { FaSearch, FaUser } from "react-icons/fa";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import LoginPopup from "@/popup/LOGIN_NOW";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
 import useGetcarts from "@/hooks/useGetcarts";
+import { setuser } from "@/redux/userSlice";
 // import useGetgoogleloginuser from "@/hooks/useGetgoogleloginuser";
 function Navbar() {
 
+  const dispatch = useDispatch()
   // useGetgoogleloginuser()
 
   const { carts } = useGetcarts()
-
+  const [popup, setPopup] = useState(false)
   const [open, setOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<number | undefined>(undefined);
@@ -19,6 +24,18 @@ function Navbar() {
   const [suggestions, setSuggestions] = useState([])
 
   const { user } = useSelector((state: any) => state.user)
+  console.log(user)
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      console.log('inside timeout')
+      if (!user) {
+        setPopup(true);
+      }
+    }, 10000); // 10 seconds
+
+    return () => clearTimeout(timeout);
+  }, []);
 
     const handleMouseEnter = () => {
         clearTimeout(dropdownRef.current);
@@ -80,6 +97,18 @@ function Navbar() {
     },
   ]
 
+  const cookie =Cookies.get('accesstoken')
+  console.log('cookie',cookie)
+
+  const handleLogout = async() => {
+    axios.defaults.withCredentials = true
+    const res= await axios.post('http://localhost:7000/api/v1/users/logout')
+    console.log(res.data.message)
+    toast.success(res.data.message)
+    dispatch(setuser(null))
+    Cookies.remove('accesstoken')
+  }
+
 
   return (
   <>
@@ -96,7 +125,7 @@ function Navbar() {
                 </li>
             ))}
             {
-              user ? user.user.role === "admin" && (
+              user ? user?.user?.role === "admin" && (
                 <li className="cursor-pointer text-2xl text-black hover:text-slate-500 ">
                   <Link to={'/admin'}>Admin</Link>
                 </li>
@@ -151,7 +180,7 @@ function Navbar() {
               user?.user ? (
                 <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
                   <Link to={`/profile/${user.user._id}`} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Profile</Link>
-                  <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Logout</Link>
+                  <button onClick={handleLogout} className="block px-4 py-2 text-gray-800 hover:bg-gray-200 text-center">Logout</button>
                 </div>
               ) : (
                 <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
@@ -164,6 +193,7 @@ function Navbar() {
         </div>
     </div>
   </div>
+  <LoginPopup isOpen={popup && !user} onClose={() => setPopup(false)} /> 
   </>
   )
 }

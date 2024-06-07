@@ -1,6 +1,7 @@
 import useGetproducts from "@/hooks/useGetproducts";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 function Viewproducts() {
 
     interface Product {
@@ -25,6 +26,7 @@ function Viewproducts() {
     const handleDelete = async (id: string) => {
         try {
             const response = await axios.delete(`http://localhost:7000/api/v1/products/deleteproduct/${id}`)
+            toast.success(response.data.message)
             console.log(response.data)
         } catch (error) {
             console.error(error)
