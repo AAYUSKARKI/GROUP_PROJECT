@@ -35,7 +35,7 @@ function Navbar() {
     }, 10000); // 10 seconds
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [user]);
 
     const handleMouseEnter = () => {
         clearTimeout(dropdownRef.current);
