@@ -7,12 +7,24 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 function Addproduct() {
+
+    const categoriesList = [
+        'Electronics',
+        'Fashion',
+        'Home & Garden',
+        'Health & Beauty',
+        'Sports & Outdoors',
+        'Toys & Games',
+        'Automotive',
+        'Books & Media',
+        'Groceries & Gourmet Food',
+        'Office Supplies'
+      ];
     
     const [loading, setLoading] = useState(false)
     const [product, setProduct] = useState({
         name: '',
         description: '',
-        category: '',
         price: 0,
         discount: 0,
         quantity: 0,
@@ -21,6 +33,7 @@ function Addproduct() {
     })
     const [image, setImage] = useState('')
     const [imagePreview, setImagePreview] = useState('')
+    const [selectedCategories, setSelectedCategories] =useState<string[]>([]);
 
     const sizeOptions = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']
 
@@ -33,6 +46,12 @@ function Addproduct() {
       setProduct({ ...product, size: selectedSizes });
     };
 
+    const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setSelectedCategories(prev =>
+            prev.includes(value) ? prev.filter(cat => cat !== value) : [...prev, value]
+        );
+    };
     const handleUploadImage = async (e : any) => {
         const file = e.target.files[0]
         setImage(file)
@@ -48,7 +67,9 @@ function Addproduct() {
         const formData = new FormData()
         formData.append('name', product.name)
         formData.append('description', product.description)
-        formData.append('category', product.category)
+        selectedCategories.forEach((category) => {
+            formData.append('category', category);
+          });
         formData.append('price', String(product.price))
         formData.append('discount', String(product.discount))
         formData.append('quantity', String(product.quantity))
@@ -65,7 +86,6 @@ function Addproduct() {
             setProduct({
                 name: '',
                 description: '',
-                category: '',
                 price: 0,
                 discount: 0,
                 quantity: 0,
@@ -145,20 +165,21 @@ function Addproduct() {
                 />
             </div>
             <div className='mt-4'>
-                <label
-                className='block text-gray-700 text-sm font-bold mb-2'
-                >
-                    Category
-                </label>
-                <input
-                type='text'
-                name='category'
-                value={product.category}
-                onChange={handleChange}
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                required
-                />
-            </div>
+                            <label className='block text-gray-700 text-sm font-bold mb-2'>
+                                Categories
+                            </label>
+                            {categoriesList.map(category => (
+                                <div key={category}>
+                                    <input
+                                        type="checkbox"
+                                        value={category}
+                                        checked={selectedCategories.includes(category)}
+                                        onChange={handleCategoryChange}
+                                    />
+                                    <label>{category}</label>
+                                </div>
+                            ))}
+                        </div>
             <div className='mt-4'>
                 <label
                 className='block text-gray-700 text-sm font-bold mb-2'
