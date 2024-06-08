@@ -25,4 +25,4 @@ export const sendEmail = async (email, subject, text) => {
 
 }
 
-sendEmail("karkiaayus2003@gmail.com", "hello", "hello")
+// sendEmail("karkiaayus2003@gmail.com", "hello", "hello")

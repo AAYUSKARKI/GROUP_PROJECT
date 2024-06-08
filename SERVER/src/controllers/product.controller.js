@@ -52,23 +52,30 @@ const createProduct = asynchandler(async (req, res) => {
 });
 
 const getAllProducts = asynchandler(async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const skip = (page - 1) * limit;
-    const products = await Product.find().skip(skip).limit(limit);
+    let products;
+    
+    if (req.query.page && req.query.limit) {
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const skip = (page - 1) * limit;
+        products = await Product.find().skip(skip).limit(limit);
+    } else {
+        products = await Product.find();
+    }
 
-    if (!products) {
-        throw new Apierror(404, "products not found");
+    if (!products || products.length === 0) {
+        throw new Apierror(404, "Products not found");
     }
 
     res.status(200).json(
         new Apiresponse(
             200,
             products,
-            "products fetched successfully",
+            "Products fetched successfully",
         )
-    )
+    );
 });
+
 
 const getProductById = asynchandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
@@ -127,8 +134,8 @@ const updateProduct = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
+            product,
             "product updated successfully",
-            product
         )
     )
 });
@@ -142,8 +149,8 @@ const deleteProduct = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
+            product,
             "product deleted successfully",
-            product
         )
     )
 });
@@ -251,6 +258,20 @@ const AutoCompletesearch = asynchandler(async (req, res) => {
     )
 });
 
+const Allproducts = asynchandler(async (req, res) => {
+    const products = await Product.find();
+    if (!products) {
+        throw new Apierror(404, "products not found");
+    }
+    res.status(200).json(
+        new Apiresponse(
+            200,
+            products,
+            "products fetched successfully",
+        )
+    )
+});
+
 export {
     createProduct,
     getAllProducts,
@@ -263,5 +284,6 @@ export {
     getTopProducts,
     getProductByDiscount,
     rateProduct,
-    AutoCompletesearch
+    AutoCompletesearch,
+    Allproducts
 }

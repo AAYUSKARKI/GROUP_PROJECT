@@ -1,25 +1,20 @@
 import {useEffect,useState} from "react";
 import axios from "axios";
-import { setproduct } from "@/redux/ProductSlice";
-import { useDispatch } from "react-redux";
+// import { setproduct } from "@/redux/ProductSlice";
 
-
-const useGetproducts = () => {
-
-    const dispatch = useDispatch()
+const useGetproducts = (currentpage:number,limit:number) => {
 
     const [products, setProducts] = useState([])
 
     const getUsers = async () => {
-        const response = await axios.get("http://localhost:7000/api/v1/products/getallproducts")
+        const response = await axios.get("http://localhost:7000/api/v1/products/getallproducts?page="+currentpage+"&limit="+limit)
         console.log('response from products',response.data.data)
         setProducts(response.data.data)
-        dispatch(setproduct(response.data.data))
     }
 
     useEffect(() => {
         getUsers()
-    }, [])
+    }, [currentpage,limit])
   
     return {products}
 }

@@ -1,6 +1,10 @@
 import  useGetusers  from "../hooks/useGetusers"
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
 function Viewusers() {
 
+    const navigate = useNavigate();
     interface User {
         _id: string;
         username: string;
@@ -10,7 +14,31 @@ function Viewusers() {
       }
 
     const {users} = useGetusers() as {users: User[]};
-    console.log(users)
+    // console.log(users)
+
+    const handleDelete = async (id: string) => {
+        const confirm = window.confirm("Are you sure you want to delete this user?");
+        if (confirm) {
+          try {
+            const response = await axios.delete(`http://localhost:7000/api/v1/users/deleteuser/${id}`);
+            if (response.data.success) {
+              toast.success(response.data.message);
+              console.log(response.data);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+
+
+    }
+
+    const handleUpdate = (id: string) => {
+        navigate(`/admin/update-user/${id}`)
+
+    }
+
+
   return (
     <>
     <h1 className="text-3xl font-bold underline text-center text-slate-900 dark:text-slate-50">ALL USERS OF THE LUCIDMERCH</h1>
@@ -51,8 +79,8 @@ function Viewusers() {
                             {user.isVerified ? 'verified' : 'not verified'}
                         </td>
                         <td className="px-6 py-4 border border-slate-300 dark:border-slate-700 flex gap-2 items-center justify-center">
-                            <button className="text-blue-500 ">EDIT</button>
-                            <button className="text-red-500">DELETE</button>
+                            <button className="text-blue-500 "  onClick={() => handleUpdate(user._id)}>EDIT</button>
+                            <button className="text-red-500" onClick={() => handleDelete(user._id)}>DELETE</button>
                         </td>
                     </tr>
                 ))}

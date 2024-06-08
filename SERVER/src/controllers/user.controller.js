@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Apiresponse } from "../utils/apiresponse.js";
 import jwt from "jsonwebtoken";
+import { sendEmail } from "../lib/sendEmail.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
     try {
@@ -199,9 +200,73 @@ const refreshaccesstoken = asynchandler(async (req, res) => {
 })
 
 
+const forgetpassword = asynchandler(async (req, res) => {
+    const { email } = req.body
+
+    if (!email) {
+        throw new Apierror(400, "email is required")
+    }
+
+    const user = await User.findOne({ email })
+
+    if (!user) {
+        throw new Apierror(404, "user not found")
+    }
+
+    const resettoken = user.createPasswordResetToken()
+    await user.save({ validateBeforeSave: false })
+
+    const reseturl = `${req.protocol}://${req.get("host")}/api/v1/user/resetpassword/${resettoken}`
+
+    const message = `your password reset token is :- \n\n ${reseturl} \n\n if you have not requested this email then please ignore it`
 
 
+    try {
+        await sendEmail({
+            email: user.email,
+            subject: "password recovery",
+            text: message
+        })
+    } catch (error) {
+        user.passwordResetToken = undefined
+        user.passwordResetExpires = undefined
 
+        await user.save({ validateBeforeSave: false })
+
+        throw new Apierror(500, error.message)
+    }
+
+
+    return res.status(200).json(new Apiresponse(200, {}, "password reset token sent to your email"))
+
+})
+
+const resetpassword = asynchandler(async (req, res) => {
+    const { password, confirmpassword } = req.body
+
+    if (!password || !confirmpassword) {
+        throw new Apierror(400, "password is required")
+    }
+
+    if (password !== confirmpassword) {
+        throw new Apierror(400, "password and confirm password should be same")
+    }
+
+    const hashedpassword = await bcrypt.hash(password, 10)
+    const user = await User.findOne({ passwordResetToken: req.params.token })
+
+    if (!user) {
+        throw new Apierror(400, "invalid password reset token")
+    }
+
+    user.password = hashedpassword
+    user.passwordResetToken = undefined
+    user.passwordResetExpires = undefined
+    await user.save()
+
+    return res.status(200).json(new Apiresponse(200, {}, "password reset successfully"))
+
+})
 
 const changecurrentpassword = asynchandler(async (req, res) => {
     const { oldpassword, newpassword } = req.body
@@ -282,6 +347,54 @@ const getallusers = asynchandler(async (req, res) => {
     return res.status(200).json(new Apiresponse(200, users, "all users fetched successfully"))
 })
 
+const getuserbyid = asynchandler(async (req, res) => {
+    const user = await User.findById(req.params.id)
+    if (!user) {
+        throw new Apierror(404, "user not found")
+    }
+    return res.status(200).json(new Apiresponse(200, user, "user fetched successfully"))
+})
+
+const updateuser = asynchandler(async (req, res) => {
+
+    const { username, email , password } = req.body
+    const avatarlocalpath = req.files?.avatar[0]?.path
+    console.log("Avatar file received:", req.files?.avatar);
+    if (!avatarlocalpath) {
+        throw new Apierror(400, "Avatar file is required")
+    }
+    const avatar = await uploadOnCloudinary(avatarlocalpath)
+    if (!avatar) {
+        throw new Apierror(400, "Avatar file not uploaded")
+    }
+    
+    const user = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+            $set: {
+                username,
+                email,
+                password,
+                avatar: avatar.url
+            }
+        },
+        { new: true }
+    ).select("-password")
+
+    if (!user) {
+        throw new Apierror(404, "user not found")
+    }
+    return res.status(200).json(new Apiresponse(200, user, "user updated successfully"))
+})
+
+const deleteuser = asynchandler(async (req, res) => {
+    const user = await User.findByIdAndDelete(req.params.id)
+    if (!user) {
+        throw new Apierror(404, "user not found")
+    }
+    return res.status(200).json(new Apiresponse(200, user, "user deleted successfully"))
+})
+
 
 
 export {
@@ -293,5 +406,10 @@ export {
     getcurrentuser,
     updateaccountdetails,
     updateuseravatar,
-    getallusers
+    getallusers,
+    getuserbyid,
+    updateuser,
+    deleteuser,
+    forgetpassword,
+    resetpassword
 }

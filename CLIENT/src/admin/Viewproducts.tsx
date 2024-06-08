@@ -1,22 +1,23 @@
-import useGetproducts from "@/hooks/useGetproducts";
+
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 function Viewproducts() {
 
-    interface Product {
-                _id: string,
-                name: string,
-                description: string,
-                category: string,
-                price: number,
-                discount: number,
-                quantity: number,
-                color: string,
-                size: string[],
-    }
+    const {products} = useSelector((state: any) => state.products)
 
-    const {products} = useGetproducts() as {products: Product[]};
+    interface Product {
+        _id: string;
+        name: string;
+        description: string;
+        category: string[];
+        price: number;
+        discount: number;
+        quantity: number;
+        color: string;
+        size: string[];
+    }
     const navigate = useNavigate()
 
     const handleUpdate = (id: string) => {
@@ -33,12 +34,13 @@ function Viewproducts() {
         }
     }
 
+
   return (
     <>
     <h1 className="text-3xl font-bold underline text-center text-slate-900 dark:text-slate-50">ALL PRODUCTS OF THE LUCIDMERCH</h1>
     <div className="flex flex-col items-center justify-center p-4 w-full h-full dark:bg-slate-800 dark:text-slate-50 bg-slate-50">
-        <table className="w-full text-sm text-slate-500 dark:text-slate-400 border border-slate-300 dark:border-slate-700 dark:bg-slate-900">
-            <thead className="text-xs text-slate-700 uppercase bg-slate-50 dark:bg-slate-700 dark:text-slate-400">
+        <table className="w-full text-md text-slate-500 dark:text-slate-400 border border-slate-300 dark:border-slate-700 dark:bg-slate-900">
+            <thead className="text-xl text-slate-700 uppercase bg-slate-50 dark:bg-slate-700 dark:text-slate-400">
                 <tr>
                     <th scope="col" className="px-6 py-3 border border-slate-300 dark:border-slate-700">
                             NAME
@@ -70,16 +72,16 @@ function Viewproducts() {
                 </tr>
             </thead>
             <tbody>
-                {products && products.map((product)=>(
+                {products && products.map((product:Product)=>(
                     <tr key={product._id} className="bg-white border-b dark:bg-slate-900 dark:border-slate-700">
                         <td className="px-6 py-4 border border-slate-300 dark:border-slate-700">
                             {product.name}
                         </td>
                         <td className="px-6 py-4 border border-slate-300 dark:border-slate-700">
-                            {product.description}
+                             {product.description}
                         </td>
                         <td className="px-6 py-4 border border-slate-300 dark:border-slate-700">
-                            {product.category}
+                        {Array.isArray(product.category) ? product.category.join(", ") : ''}
                         </td>
                         <td className="px-6 py-4 border border-slate-300 dark:border-slate-700">
                             {product.price}
@@ -94,7 +96,7 @@ function Viewproducts() {
                             {product.color}
                         </td>
                         <td className="px-6 py-4 border border-slate-300 dark:border-slate-700">
-                            {product.size}
+                        {Array.isArray(product.size) ? product.size.join(", ") : ''}
                         </td>
                         <td className="px-6 py-4 border border-slate-300 dark:border-slate-700 flex gap-2 items-center justify-center">
                             <button className="text-blue-500 " onClick={() => handleUpdate(product._id)}>EDIT</button>

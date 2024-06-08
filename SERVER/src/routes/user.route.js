@@ -9,6 +9,11 @@ import {
     updateaccountdetails,
     updateuseravatar,
     getallusers,
+    getuserbyid,
+    updateuser,
+    deleteuser,
+    forgetpassword,
+    resetpassword
 }
     from "../controllers/user.controller.js";
 
@@ -29,6 +34,18 @@ router.route("/register").post(
     ]),
     registerUser)
 
+    router.route("/updateuser").post(
+        upload.fields([
+            {
+                name: "avatar",
+                maxCount: 1
+            }, {
+                name: "coverImage",
+                maxCount: 1
+            }
+        ]),
+        updateuser)
+
 router.route("/login").post(loginuser)
 
 //seruce routes
@@ -39,5 +56,9 @@ router.route("/currentuser").get(verifyJWT, getcurrentuser)
 router.route("/updateaccount").patch(verifyJWT, updateaccountdetails)
 router.route("/avatar").patch(verifyJWT, upload.single("avatar"), updateuseravatar)
 router.route("/allusers").get(getallusers)
+router.route("/getuserbyid/:id").get(getuserbyid)
+router.route("/deleteuser/:id").delete(verifyJWT, deleteuser)
+router.route("/forgetpassword").post(forgetpassword)
+router.route("/resetpassword/:token").post(resetpassword)
 
 export default router //can be imported by any name _eg RegisterUser

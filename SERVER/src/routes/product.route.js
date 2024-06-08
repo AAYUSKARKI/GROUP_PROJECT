@@ -13,7 +13,8 @@ import {
     getTopProducts,
     getProductByDiscount,
     rateProduct,
-    AutoCompletesearch
+    AutoCompletesearch,
+    Allproducts
 } from "../controllers/product.controller.js";
 
 
@@ -43,5 +44,7 @@ router.route("/getproductbydiscount").get(getProductByDiscount);
 router.route("/rateproduct/:id").post(verifyJWT, rateProduct);
 
 router.route("/autocompletesearch").get(AutoCompletesearch);
+
+router.route("/allproducts").get(Allproducts);
 
 export default router

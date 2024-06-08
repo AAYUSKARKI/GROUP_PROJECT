@@ -14,7 +14,7 @@ function Homecards() {
         size: string[],
 }
 
-    const {products} = useGetproducts() as {products: Product[]};
+    const {products} = useGetproducts(1,20) as {products: Product[]};
 
 
     return (

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import useGetcarts from "@/hooks/useGetcarts";
 import { setuser } from "@/redux/userSlice";
+import Theme from "../Theme/Theme";
 // import useGetgoogleloginuser from "@/hooks/useGetgoogleloginuser";
 function Navbar() {
 
@@ -112,7 +113,7 @@ function Navbar() {
 
   return (
   <>
-  <div className="bg-white border-b-2 border-slate-200 p-2 flex justify-between">
+  <div className="sticky top-0 z-50 bg-white border-b-2 border-slate-200 p-2 flex justify-between">
     <div className="flex flex-col py-2 px-2 ml-8 ">
         <p className="text-2xl text-black font-bold "><Link to={"/"}>Lucid Merch</Link></p>
         <p className="text-xs text-black font-bold">" Merch for Nerds "</p>
@@ -194,6 +195,7 @@ function Navbar() {
     </div>
   </div>
   <LoginPopup isOpen={popup && !user} onClose={() => setPopup(false)} /> 
+    <Theme />
   </>
   )
 }

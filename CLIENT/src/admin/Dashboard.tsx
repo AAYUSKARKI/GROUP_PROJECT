@@ -29,6 +29,7 @@ function Dashboard() {
           <Link to={link.link}>{link.name}</Link>
         </li>
       ))}
+      <Link to={"/admin/users"}>{'ViewUsers'}</Link>
     </ul>
   </div>
 </div>

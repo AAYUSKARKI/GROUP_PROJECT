@@ -35,8 +35,8 @@ function HomeCard({product} : any) {
             </div>
         </div>
         <div className='p-4 grid  gap-2'>
-            <h2 className='text-b font-bold md:text-lg text-ellipsis line-clamp-2 text-black'>{product.name}</h2>
-            <div className='capitalize text-slate-500'>{parse(product.description)}</div>
+            <h2 className='z-50 text-b font-bold md:text-lg text-ellipsis line-clamp-2 text-black'>{product.name}</h2>
+            {/* <div className='capitalize text-slate-500'>{parse(product.description)}</div> */}
             <div className='flex gap-3'>
             <p className='text-red-600 font-medium'>NRS.{product.price - product.discount}</p>
             <p className='text-slate-500 line-through'>NRS.{product.price}</p>
