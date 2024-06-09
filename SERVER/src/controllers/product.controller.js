@@ -156,15 +156,15 @@ const deleteProduct = asynchandler(async (req, res) => {
 });
 
 const searchProduct = asynchandler(async (req, res) => {
-    const products = await Product.find({ name: { $regex: req.params.key, $options: "i" } });
+    const products = await Product.find({ name: { $regex: req.query.key, $options: "i" } });
     if (!products) {
         throw new Apierror(404, "products not found");
     }
     res.status(200).json(
         new Apiresponse(
             200,
+            products,
             "products fetched successfully",
-            products
         )
     )
 });

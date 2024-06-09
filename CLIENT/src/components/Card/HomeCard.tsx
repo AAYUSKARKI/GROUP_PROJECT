@@ -1,4 +1,4 @@
-import parse from 'html-react-parser';
+// import parse from 'html-react-parser';
 import axios from 'axios';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { useState } from 'react';
@@ -35,7 +35,7 @@ function HomeCard({product} : any) {
             </div>
         </div>
         <div className='p-4 grid  gap-2'>
-            <h2 className='z-50 text-b font-bold md:text-lg text-ellipsis line-clamp-2 text-black'>{product.name}</h2>
+            <h2 className=' text-b font-bold md:text-lg text-ellipsis line-clamp-2 text-black'>{product.name}</h2>
             {/* <div className='capitalize text-slate-500'>{parse(product.description)}</div> */}
             <div className='flex gap-3'>
             <p className='text-red-600 font-medium'>NRS.{product.price - product.discount}</p>

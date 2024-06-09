@@ -5,6 +5,8 @@ import { FaMinus, FaPlus } from 'react-icons/fa';
 import useGetcarts from '@/hooks/useGetcarts';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 function Cartsdetail() {
 
 
@@ -38,19 +40,22 @@ function Cartsdetail() {
         }));
     };
 
+    const handleDelete = async (id: string) => {
+        const confirm = window.confirm("Are you sure you want to delete this item?");
+        if (confirm) {
+            try {
+                const response = await axios.delete(`http://localhost:7000/api/v1/carts/deletecart/${id}`);
+                toast.success(response.data.message);
+                console.log(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
 
-    // const [qty, setQty] = useState(1);
     return (
         <>
             <h1 className='text-lg text-center font-bold text-slate-900'>Your Cart</h1>
-            {/* <div className="main-div flex justify-between h-[300px] w-[500px]">
-                <div className="image h-[100px] w-[200px] "><img src={arch} alt="image"/></div>
-                <div className="cart-price">
-                    <p className='mr-4'>$40</p>
-                </div>
-                <div className="quantity">Quantity</div>
-                <div className="total">total</div>
-            </div> */}
         <div className="flex flex-col items-center justify-center p-4 w-full h-full dark:bg-slate-800 dark:text-slate-50 bg-slate-50">
         <table className="w-full text-sm text-slate-500 dark:text-slate-400 border-b-[8px] border-red-500 dark:border-slate-700 dark:bg-slate-900">
             <thead className="text-xs text-slate-700 uppercase bg-slate-50 dark:bg-slate-700 dark:text-slate-400">
@@ -77,10 +82,10 @@ function Cartsdetail() {
                     carts.length > 0 ? carts.map((cart) => (
                     <tr key={cart._id} className="bg-white border-b-[8px] border-slate-300 dark:bg-slate-900">
                         <td className="px-6 py-4 h-[100px] w-[200px]">
-                        <img src={cart.product.image} alt="image" />
+                        <img src={cart?.product?.image} alt="image" />
                         </td>
                         <td className="px-6 py-4 ">
-                          <div className='flex items-center justify-center'><p className='antialiased text-black '>{cart.product.price-cart.product.discount}</p></div>
+                          <div className='flex items-center justify-center'><p className='antialiased text-black '>{cart.product?.price-cart.product?.discount}</p></div>
                         </td>
                         <td className="px-6 py-4 ">
                          <div className='flex items-center justify-center gap-3'>
@@ -90,14 +95,14 @@ function Cartsdetail() {
                          </div>
                         </td>
                         <td className="px-6 py-4 ">
-                        <div className='flex items-center justify-center'><p className='antialiased text-black '>{(cart.product.price-cart.product.discount)*quantities[cart._id]}</p></div>
+                        <div className='flex items-center justify-center'><p className='antialiased text-black '>{(cart.product?.price-cart.product?.discount)*quantities[cart._id]}</p></div>
                         </td>
                         <td className="px-6 py-4 ">
                         <div className='flex items-center justify-center gap-3'>
                         <Link to={`/order/${cart._id}`}>
                         <button className='text-center text-green-600 text-xl'>Order Now</button>
                         </Link>
-                            <button className='text-center text-red-600 text-xl '>Remove</button>
+                            <button onClick={() => handleDelete(cart._id)} className='text-center text-red-600 text-xl '>Remove</button>
                          </div>
                         </td>
                     </tr>

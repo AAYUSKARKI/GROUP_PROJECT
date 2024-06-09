@@ -12,6 +12,20 @@ const createCart = asynchandler(async (req, res) => {
         throw new Apierror(400, "All fields are required");
     }
 
+    //check if the product is already in the cart
+    const cartexists = await Cart.findOne({ user, product });
+    if (cartexists) {
+        cartexists.quantity += quantity;
+        await cartexists.save();
+        return res.status(200).json(
+            new Apiresponse(
+                200,
+                cartexists,
+                "Added to cart successfully"
+            )
+        )
+    }
+
     const cart = await Cart.create({
         user,
         quantity,
@@ -78,8 +92,8 @@ const deleteCart = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
-            "Cart deleted successfully",
-            cart
+            cart,
+            "Cart deleted successfully"
         )
     )
 })

@@ -28,7 +28,9 @@ const orderSchema = new Schema({
    isPaid: Boolean,
    paidAt: Date,
    isDelivered: Boolean,
-   deliveredAt: Date
+   deliveredAt: Date,
+   transaction_uuid: String,
+   product_code: String
 },
 { timestamps: true 
 

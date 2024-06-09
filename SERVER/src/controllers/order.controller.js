@@ -2,10 +2,11 @@ import Order from "../models/order.model.js";
 import {asynchandler} from "../utils/asynchandler.js";
 import {Apierror} from "../utils/apierror.js";
 import {Apiresponse} from "../utils/apiresponse.js";
-
+import CryptoJS from "crypto-js";
 const createOrder = asynchandler(async (req, res) => {
     const { quantity,productid,fullname, address, city, postalCode, country, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice } = req.body;
-    if (!quantity || !productid || !shippingAddress || !paymentMethod || !itemsPrice || !taxPrice || !shippingPrice || !totalPrice) {
+    console.log(req.body);
+    if (!quantity || !productid || !paymentMethod || !itemsPrice || !taxPrice || !shippingPrice || !totalPrice) {
         throw new Apierror(400, "All fields are required");
     }
     const user = req.user._id;
@@ -18,12 +19,16 @@ const createOrder = asynchandler(async (req, res) => {
     ];
 
     const shippingAddress = {
-        fullName: fullname,
+        fullName : fullname,
         address,
         city,
         postalCode,
         country
     }
+
+    const hash = CryptoJS.HmacSHA256("Message", "8gBm/:&EnhH.1/qsecret");
+    const hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+
 
     const order = await Order.create({
         user,
@@ -33,7 +38,9 @@ const createOrder = asynchandler(async (req, res) => {
         itemsPrice,
         taxPrice,
         shippingPrice,
-        totalPrice
+        totalPrice,
+        transaction_uuid: hashInBase64,
+        product_code: "EPAYTEST",
     });
 
     const Formdata = {
@@ -53,8 +60,8 @@ const createOrder = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
-            "Order created successfully",
-            order
+            order,
+            "Order created successfully"          
         )
     )
 })
@@ -67,8 +74,8 @@ const getOrders = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
-            "orders fetched successfully",
-            orders
+            orders,
+            "orders fetched successfully"
         )
     )
 })
@@ -82,8 +89,8 @@ const getOrderById = asynchandler(async (req, res) => {
     res.status(200).json(
         new Apiresponse(
             200,
-            "order fetched successfully",
-            order
+            order,
+            "order fetched successfully"
         )
     )
 })

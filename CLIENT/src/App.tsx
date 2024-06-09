@@ -16,8 +16,9 @@ import CategorylandingPage from './components/categoryFilter/CategorylandingPage
 import Paymentpage from './pages/Paymentpage';
 import Stat from './admin/Stat';
 import Adduser from './admin/Adduser';
+import Searchgarekodekhaune from './components/searchproduct/Searchgarekodekhaune';
 import Updateuser from './admin/Updateuser';
-
+import Ordergarekoherney from '@/pages/Ordergarekoherney'
 function App() {
   return (
    <>
@@ -29,10 +30,12 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/carts" element={<Cartsdetail />} />
         <Route path="/product/:id" element={<CardDetailsDisplay />} />
-        <Route path="/payment" element={<Paymentpage />} />
+        <Route path="/payment/:id" element={<Paymentpage />} />
+        <Route path="products/search" element={<Searchgarekodekhaune />} />
         <Route path="/order/:id" element={<OrderForm />} />
         <Route path="/category/:category" element={<CategorylandingPage />} />
         <Route path="/admin" element={<Stat />} />
+        <Route path="/checkout" element={<Ordergarekoherney />} />
         <Route path="/admin/dashboard" element={<Stat />} />
         <Route path="/admin/add-product" element={<Addproduct />} />
         <Route path="/admin/add-user" element={<Adduser />} />

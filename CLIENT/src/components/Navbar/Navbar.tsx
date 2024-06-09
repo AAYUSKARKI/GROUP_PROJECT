@@ -1,5 +1,5 @@
 import { useState,useRef,useEffect } from "react";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { RiShoppingCart2Line, RiHeartLine } from 'react-icons/ri';
 import { FaSearch, FaUser } from "react-icons/fa";
 import axios from "axios";
@@ -14,6 +14,9 @@ import Theme from "../Theme/Theme";
 function Navbar() {
 
   const dispatch = useDispatch()
+
+  // const googleloginuser = useGetgoogleloginuser()
+  const navigate = useNavigate()
   // useGetgoogleloginuser()
 
   const { carts } = useGetcarts()
@@ -83,7 +86,8 @@ function Navbar() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    alert(`searching for ${search}`)
+    navigate(`/products/search/?query=${search}`)
+    setSuggestions([])
   }
 
   const links = [
@@ -151,7 +155,7 @@ function Navbar() {
               <ul className="absolute bg-white p-2 w-[300px] rounded-md text-black border-black flex flex-col gap-1 mt-1">
                 { suggestions && suggestions.map((suggestion: any) => (
                 <li key={suggestion._id} className="hover:bg-slate-200">
-                    <Link to={`/product/${suggestion.id}`}>{suggestion.name}</Link>
+                    <Link to={`/products/search/?query=${suggestion.name}`}>{suggestion.name}</Link>
                 </li>
                 ))}
               </ul>

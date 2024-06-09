@@ -3,14 +3,16 @@ import esewa from '../assets/esewa.jpg'
 import Orderedproduct from "./Orderedproduct";
 import { useParams,useNavigate } from "react-router-dom";
 import useGetcartbyid from "@/hooks/useGetcartbyid";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const OrderForm = () => {
 
     const { id } = useParams();
     const navigate = useNavigate();
 
-
-  const { cart } = useGetcartbyid(id as string);
+// quantity,productid,fullname, address, city, postalCode, country, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice 
+  const { cart }:any = useGetcartbyid(id as string); 
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -25,12 +27,36 @@ const OrderForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  console.log(cart?.quantity)
+  const handleSubmit = async(e:any) => {
     e.preventDefault();
     // Here you can handle the form submission, e.g., send data to server
-    navigate("/payment")
-  };
+    try {
+      axios.defaults.withCredentials = true
+      const response = await axios.post("http://localhost:7000/api/v1/orders/createorder",
+      {
+        fullname: formData.fullName,
+        phone: formData.phone,
+        address: formData.address,
+        city: formData.city,
+        postalCode: formData.postalCode,
+        country: formData.country,
+        paymentMethod: formData.paymentMethod,
+        productid: cart.product._id,
+        quantity: cart.quantity,
+        itemsPrice: cart.product.price,
+        totalPrice: cart.product.price*cart.quantity,
+        taxPrice: 200,
+        shippingPrice: 200
+      })
+      console.log(response.data)
+      toast.success(response.data.message)
+      navigate(`/payment/${response.data.data._id}`)
+  }
+  catch (error) {
+      console.log(error)
+  }
+  }
 
   return (
     <>

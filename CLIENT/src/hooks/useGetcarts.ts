@@ -47,7 +47,7 @@ interface Product {
 
 const useGetcarts = () => {
 
-    const [carts, setCarts] = useState([] as Cart[])
+    const [carts, setCarts] = useState<Cart[]>([]);
 
     const getCarts = async () => {
         axios.defaults.withCredentials = true
