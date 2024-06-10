@@ -34,6 +34,7 @@ function HomeDisplay() {
   }, [currentImage]);
 
   return (
+    <div className="hidden md:flex">
     <div className="container mt-2">
       <div className="flex flex-col gap-8 justify-center h-[70vh] bg-white p-5 ">
         <div className="flex gap-2  ">
@@ -44,7 +45,7 @@ function HomeDisplay() {
             <img src={banner2} alt="" className="h-full w-full object-fill" />
           </div>
         </div>
-        <div className=" flex h-96  overflow-hidden">
+        <div className=" flex h-96  overflow-hidden object-cover">
           {DesktopImages.map((imageUrl, index) => {
             return (
               <div
@@ -58,6 +59,7 @@ function HomeDisplay() {
           })}
         </div>
       </div>
+    </div>
     </div>
   );
 }

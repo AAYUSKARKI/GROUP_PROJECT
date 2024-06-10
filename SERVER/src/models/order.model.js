@@ -30,7 +30,14 @@ const orderSchema = new Schema({
    isDelivered: Boolean,
    deliveredAt: Date,
    transaction_uuid: String,
-   product_code: String
+   product_code: String,
+   total_amount: Number,
+   signature: String,
+   status: {
+       type: String,
+       default: "Pending",
+       enum: ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"]
+   }
 },
 { timestamps: true 
 
