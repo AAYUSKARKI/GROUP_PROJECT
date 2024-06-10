@@ -42,7 +42,7 @@ function Category() {
         }
       };
   return (
-    <div className="flex justify-center items-center gap-8 bg-slate-600 p-2">
+    <div className="hidden md:flex justify-center items-center gap-8 bg-slate-600 p-2">
         {
             categoriesList.map((category) => (
                 <div className=" p-2 rounded-md" key={category}>

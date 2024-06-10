@@ -77,7 +77,10 @@ const getOrders = asynchandler(async (req, res) => {
 })
 
 const getOrderById = asynchandler(async (req, res) => {
-    const order = await Order.findById(req.params.id).populate("user").populate("orderItems.product");
+    const order = await Order.findById(req.params.id).populate("user").populate({
+        path: 'orderItems.product', // Path to populate
+        model: 'Product' // Model to use for population
+    });
     if (!order) {
         throw new Apierror(404, "order not found");
     }
