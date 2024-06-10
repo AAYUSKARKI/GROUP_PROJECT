@@ -73,6 +73,8 @@ const registerUser = asynchandler(async (req, res) => {
         throw new Apierror(500, "something went wrong while registering a user")
     }
 
+    await sendEmail(email, "Welcome to LucidMerch", `Thanks for registering with us ${username}`)
+
     return res.status(201).json(
         new Apiresponse(200, createdUser, "User Registered sucesfully")
     )
@@ -118,6 +120,8 @@ const loginuser = asynchandler(async (req, res) => {
     const { accesstoken, refreshtoken } = await generateAccessAndRefreshToken(user._id)
 
     const loggedinUser = await User.findById(user._id).select("-password,-refreshtoken")
+
+    await sendEmail(email, "is this you?", `Your account has just logged in!`)
 
     const options = {
         httpOnly: true,

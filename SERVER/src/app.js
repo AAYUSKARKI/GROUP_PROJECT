@@ -3,10 +3,10 @@ import cors from 'cors';
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import { User } from "./src/models/user.model.js";
+import { User } from "./models/user.model.js";
 import passport from "passport";
 import passportGoogleOauth20 from "passport-google-oauth20";
-import esewa from "./src/payment/esewa.js";
+import esewa from "./payment/esewa.js";
 
 const app = express();
 
@@ -96,11 +96,11 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 //routes import
-import userRouter from './src/routes/user.route.js'
-import cartRouter from './src/routes/cart.route.js'
-import orderRouter from './src/routes/order.route.js'
-import productRouter from './src/routes/product.route.js'
-import wishlistRouter from './src/routes/wishlist.route.js'
+import userRouter from './routes/user.route.js'
+import cartRouter from './routes/cart.route.js'
+import orderRouter from './routes/order.route.js'
+import productRouter from './routes/product.route.js'
+import wishlistRouter from './routes/wishlist.route.js'
 
 //routes declaration
 app.use("/api/v1/users",userRouter)
