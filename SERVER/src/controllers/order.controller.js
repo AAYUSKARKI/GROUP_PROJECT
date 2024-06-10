@@ -2,6 +2,7 @@ import Order from "../models/order.model.js";
 import {asynchandler} from "../utils/asynchandler.js";
 import {Apierror} from "../utils/apierror.js";
 import {Apiresponse} from "../utils/apiresponse.js";
+import { v4 as uuidv4 } from 'uuid';
 import CryptoJS from "crypto-js";
 const createOrder = asynchandler(async (req, res) => {
     const { quantity,productid,fullname, address, city, postalCode, country, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice } = req.body;
@@ -26,9 +27,15 @@ const createOrder = asynchandler(async (req, res) => {
         country
     }
 
-    const hash = CryptoJS.HmacSHA256("Message", "8gBm/:&EnhH.1/qsecret");
-    const hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+    
+    const transactionUUID = uuidv4();
+    const productCode = "EPAYTEST";
 
+     // Create the string to sign
+     const fieldsToSign = `total_amount=${totalPrice},transaction_uuid=${transactionUUID},product_code=${productCode}`;
+
+     const hash = CryptoJS.HmacSHA256(fieldsToSign, "8gBm/:&EnhH.1/q");
+    const hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
 
     const order = await Order.create({
         user,
@@ -39,23 +46,12 @@ const createOrder = asynchandler(async (req, res) => {
         taxPrice,
         shippingPrice,
         totalPrice,
-        transaction_uuid: hashInBase64,
+        total_amount: totalPrice,
+        transaction_uuid: transactionUUID,
+        signature: hashInBase64,
         product_code: "EPAYTEST",
     });
 
-    const Formdata = {
-        amount: "100",
-        failure_url: "https://localhost:5173",
-        product_delivery_charg: "0",
-        product_service_charge: "0",
-        product_code: "EPAYTEST",
-        signature: "YVweM7CgAtZW5tRKica/BIeYFvpSj09AaInsulqNKHk=",
-        signed_field_names: "total_amount,transaction_uuid,product_code",
-        success_url: 'https://localhost:5173/success',
-        tax_amount: "10",
-        total_amount: "110",
-        transaction_uuid: "ab14a8f2b02c3"
-        }
 
     res.status(200).json(
         new Apiresponse(
