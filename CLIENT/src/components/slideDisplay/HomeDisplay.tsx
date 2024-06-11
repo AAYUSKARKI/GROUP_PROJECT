@@ -15,11 +15,6 @@ function HomeDisplay() {
       setCurrentImage((prev) => prev + 1);
     }
   };
-  const prevImage = () => {
-    if (currentImage != 0) {
-      setCurrentImage((prev) => prev - 1);
-    }
-  };
 
   useEffect(() => {
     const interval = setInterval(() => {
