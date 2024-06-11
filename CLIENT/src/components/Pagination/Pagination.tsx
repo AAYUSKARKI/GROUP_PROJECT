@@ -8,11 +8,13 @@ function Pagination() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [totalProducts, setTotalProducts] = useState(products.length);
+  const [totalProducts, setTotalProducts] = useState(0);
   const [paginatedProducts, setPaginatedProducts] = useState([]);
 
   useEffect(() => {
-    setTotalProducts(products.length);
+    if (products) {
+      setTotalProducts(products.length);
+    }
   }, [products]);
 
   useEffect(() => {
