@@ -4,6 +4,7 @@ import { FaPlus, FaMinus } from 'react-icons/fa';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 function FashionCard({product} : any) {
   const navigate = useNavigate();
 
@@ -13,7 +14,9 @@ function FashionCard({product} : any) {
     setQty(1)
   }
 
+  const { user } = useSelector((state: any) => state.user)
   const handleAddToCart = async() => {
+    if(user?.user ) {
     axios.defaults.withCredentials = true
     const response = await axios.post('https://lucidmerch.onrender.com/api/v1/carts/createcart', {
       product: product._id,
@@ -21,7 +24,13 @@ function FashionCard({product} : any) {
     })
     console.log(response.data)
     toast.success(response.data.message)
+    }
+    else {
+      toast.error('Please Login First')
+      navigate('/login')
+    }
   }
+
 
 
   return (

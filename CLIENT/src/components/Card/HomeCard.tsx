@@ -4,6 +4,7 @@ import { FaPlus, FaMinus } from 'react-icons/fa';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 function HomeCard({product} : any) {
   const navigate = useNavigate();
 
@@ -12,15 +13,24 @@ function HomeCard({product} : any) {
   if(qty < 1) {
     setQty(1)
   }
+  const { user } = useSelector((state: any) => state.user)
 
   const handleAddToCart = async() => {
-    axios.defaults.withCredentials = true
-    const response = await axios.post('https://lucidmerch.onrender.com/api/v1/carts/createcart', {
+    if(user?.user ) {
+      console.log('user', user?.user)
+      axios.defaults.withCredentials = true
+     const response = await axios.post('https://lucidmerch.onrender.com/api/v1/carts/createcart', {
       product: product._id,
       quantity: qty
     })
     console.log(response.data)
     toast.success(response.data.message)
+    }
+    else {
+      toast.error('Please Login First')
+      navigate('/login')
+    }
+    
   }
 
 

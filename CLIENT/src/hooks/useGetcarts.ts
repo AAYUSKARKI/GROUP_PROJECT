@@ -1,5 +1,6 @@
 import {useEffect,useState} from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 // Define the interface for Product within Cart
 interface Product {
@@ -47,13 +48,17 @@ interface Product {
 
 const useGetcarts = () => {
 
+  const { user } = useSelector((state: any) => state.user)
+
     const [carts, setCarts] = useState<Cart[]>([]);
 
     const getCarts = async () => {
+      if(user?.user){
         axios.defaults.withCredentials = true
         const response = await axios.get("https://lucidmerch.onrender.com/api/v1/carts/getcart")
         console.log('response from products',response.data.data)
         setCarts(response.data.data)
+      }
     }
 
     useEffect(() => {
