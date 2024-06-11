@@ -74,7 +74,7 @@ function Updateuser() {
 
         try {
           setLoading(true);
-          const response = await axios.post(`http://localhost:7000/api/v1/users/updateuser/${id}`,formData)
+          const response = await axios.post(`https://lucidmerch.onrender.com/api/v1/users/updateuser/${id}`,formData)
 
           if (response.data.success) {
             toast.success(response.data.message);

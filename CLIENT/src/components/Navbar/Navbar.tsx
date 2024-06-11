@@ -19,7 +19,7 @@ function Navbar() {
   const navigate = useNavigate()
   // useGetgoogleloginuser()
 
-  const { carts } = useGetcarts()
+  const { carts = [] } = useGetcarts()
   const [popup, setPopup] = useState(false)
   const [open, setOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -61,10 +61,10 @@ function Navbar() {
   }
  
 
-  //http://localhost:7000/api/v1/products/autocompletesearch?key=a
+  //https://lucidmerch.onrender.com/api/v1/products/autocompletesearch?key=a
 
   const fetchSuggestions = async () => {
-    const response = await axios.get(`http://localhost:7000/api/v1/products/autocompletesearch?key=${search}`)
+    const response = await axios.get(`https://lucidmerch.onrender.com/api/v1/products/autocompletesearch?key=${search}`)
     console.log(response.data.data)
     setSuggestions(response.data.data)
   }
@@ -108,7 +108,7 @@ function Navbar() {
 
   const handleLogout = async() => {
     axios.defaults.withCredentials = true
-    const res= await axios.post('http://localhost:7000/api/v1/users/logout')
+    const res= await axios.post('https://lucidmerch.onrender.com/api/v1/users/logout')
     console.log(res.data.message)
     toast.success(res.data.message)
     dispatch(setuser(null))
@@ -178,7 +178,7 @@ function Navbar() {
             </div>
             <div className="relative">
               <Link to={"/carts"}><RiShoppingCart2Line  className=" cursor-pointer w-8 h-8"/></Link>
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">{carts.length}</span>
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"> {carts?.length || 0}</span>
             </div>
           <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             {
@@ -213,7 +213,7 @@ function Navbar() {
             </div>
             <div className="relative">
               <Link to={"/carts"}><RiShoppingCart2Line className="cursor-pointer w-8 h-8" /></Link>
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">{carts.length}</span>
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"> {carts?.length || 0}</span>
             </div>
             </div>
           <button className="p-4" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -246,7 +246,7 @@ function Navbar() {
             </div>
             <div className="relative">
               <Link to={"/carts"}><RiShoppingCart2Line className="cursor-pointer w-8 h-8" /></Link>
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs">{carts.length}</span>
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs"> {carts?.length || 0}</span>
             </div>
             <div className="relative" onClick={handleuserIcon}>
               {user?.user?.avatar ? (

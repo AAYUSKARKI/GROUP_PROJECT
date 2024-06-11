@@ -17,7 +17,7 @@ const useGetuserByid = (id : string) => {
     const [user, setUser] = useState({} as User)
 
     const getUser = async () => {
-        const response = await axios.get("http://localhost:7000/api/v1/users/getuserbyid/"+id)
+        const response = await axios.get("https://lucidmerch.onrender.com/api/v1/users/getuserbyid/"+id)
         console.log(response.data.data)
         setUser(response.data.data)
     }

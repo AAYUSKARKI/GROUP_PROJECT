@@ -33,7 +33,7 @@ const OrderForm = () => {
     // Here you can handle the form submission, e.g., send data to server
     try {
       axios.defaults.withCredentials = true
-      const response = await axios.post("http://localhost:7000/api/v1/orders/createorder",
+      const response = await axios.post("https://lucidmerch.onrender.com/api/v1/orders/createorder",
       {
         fullname: formData.fullName,
         phone: formData.phone,

@@ -7,7 +7,7 @@ import { User } from "./models/user.model.js";
 import passport from "passport";
 import passportGoogleOauth20 from "passport-google-oauth20";
 import esewa from "./payment/esewa.js";
-
+import MongoStore from 'connect-mongo';
 const app = express();
 
 //dotenv config
@@ -19,11 +19,19 @@ console.log(process.env.CORS_ORIGIN);
 
 // const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
+// Session configuration with connect-mongo
 app.use(session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: false
-}))
+  secret: process.env.SESSION_SECRET,  // Use a strong secret for session
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      collectionName: 'sessions',  // Name of the collection to store sessions
+  }),
+  cookie: {
+      maxAge: 1000 * 60 * 60 * 24  // 1 day
+  }
+}));
 
 app.use(passport.initialize())
 app.use(passport.session())

@@ -51,7 +51,7 @@ const useGetcarts = () => {
 
     const getCarts = async () => {
         axios.defaults.withCredentials = true
-        const response = await axios.get("http://localhost:7000/api/v1/carts/getcart")
+        const response = await axios.get("https://lucidmerch.onrender.com/api/v1/carts/getcart")
         console.log('response from products',response.data.data)
         setCarts(response.data.data)
     }

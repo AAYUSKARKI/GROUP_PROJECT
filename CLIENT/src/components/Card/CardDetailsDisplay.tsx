@@ -1,5 +1,4 @@
 import { useState } from "react";
-import image1 from "../../../../assests/arch.jpg";
 import { FaShippingFast } from "react-icons/fa";
 import { BsCashCoin } from "react-icons/bs";
 import Homecards from "../Cards/Homecards";
