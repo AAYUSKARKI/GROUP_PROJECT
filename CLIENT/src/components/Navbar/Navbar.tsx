@@ -20,6 +20,7 @@ function Navbar() {
   // useGetgoogleloginuser()
 
   const { carts = [] } = useGetcarts()
+  const [cartLength, setCartLength] = useState(carts ? carts.length : 0)
   const [popup, setPopup] = useState(false)
   const [open, setOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -30,6 +31,12 @@ function Navbar() {
 
   const { user } = useSelector((state: any) => state.user)
   console.log(user)
+
+  useEffect(() => {
+    if (carts) {
+      setCartLength(carts.length);
+    }
+  }, [carts]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -123,6 +130,8 @@ function Navbar() {
     }
   }, [isMobileMenuOpen]);
 
+  console.log('cart length is',cartLength)
+
   return (
   <>
   <div className="sticky top-0 z-50 bg-white border-b-2 border-slate-200 p-2 flex justify-between">
@@ -178,7 +187,7 @@ function Navbar() {
             </div>
             <div className="relative">
               <Link to={"/carts"}><RiShoppingCart2Line  className=" cursor-pointer w-8 h-8"/></Link>
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"> {carts?.length || 0}</span>
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"> {cartLength}</span>
             </div>
           <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             {
@@ -213,7 +222,7 @@ function Navbar() {
             </div>
             <div className="relative">
               <Link to={"/carts"}><RiShoppingCart2Line className="cursor-pointer w-8 h-8" /></Link>
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"> {carts?.length || 0}</span>
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"> {cartLength}</span>
             </div>
             </div>
           <button className="p-4" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -246,7 +255,7 @@ function Navbar() {
             </div>
             <div className="relative">
               <Link to={"/carts"}><RiShoppingCart2Line className="cursor-pointer w-8 h-8" /></Link>
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs"> {carts?.length || 0}</span>
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-3 h-3 flex items-center justify-center text-xs"> {cartLength}</span>
             </div>
             <div className="relative" onClick={handleuserIcon}>
               {user?.user?.avatar ? (
