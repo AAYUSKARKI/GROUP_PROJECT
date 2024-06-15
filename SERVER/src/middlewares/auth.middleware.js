@@ -12,7 +12,7 @@ export const verifyJWT = asynchandler(async(req,res,next)=>{
        throw new Apierror(401,"unathorized token")
     }
 
-    const decodedtoken= jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    const decodedtoken= jwt.verify(token,"OTUCdjhudisEL&yesejhfuesfh_gsjfsejhfrusfnASSS8ifd")
 
     console.log(decodedtoken,'decodedtoken')
 
