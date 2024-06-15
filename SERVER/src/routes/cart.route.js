@@ -6,9 +6,9 @@ import { createCart, getCart, updateCart, deleteCart , getSingleCart} from "../c
 const router = Router();
 
 
-router.route("/createcart").post(createCart);
+router.route("/createcart").post(verifyJWT,createCart);
 
-router.route("/getcart").get(getCart);
+router.route("/getcart").get(verifyJWT,getCart);
 
 router.route("/updatecart/:id").put(verifyJWT, updateCart);
 
