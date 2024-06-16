@@ -73,7 +73,7 @@ userschema.methods.generateAccessToken = function (){
         email: this.email,
         username: this.username
     },
-    process.env.ACCESS_TOKEN_SECRET,
+    "OTUCdjhudisEL&yesejhfuesfh_gsjfsejhfrusfnASSS8ifd",
     { expiresIn: '24h' }
     )
 }
