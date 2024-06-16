@@ -8,7 +8,6 @@ import toast from 'react-hot-toast'
 import Cookies from 'js-cookie'
 import { useDispatch} from 'react-redux'
 import { setuser } from '../redux/userSlice'
-
 function Login() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
@@ -34,7 +33,7 @@ const handlesubmit = async(e:any)=>{
     dispatch(setuser(res.data.data))
     console.log(res.data.data.accesstoken, 'accesstoken')
     Cookies.set("accesstoken", res.data.data.accesstoken,{
-      expires: 7,
+      expires: 1,
       path: "/",
       secure: false
     })

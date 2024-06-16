@@ -74,9 +74,7 @@ userschema.methods.generateAccessToken = function (){
         username: this.username
     },
     process.env.ACCESS_TOKEN_SECRET,
-    {
-        expiresIn:process.env.ACCESS_TOKEN_EXPIRY
-    }
+    { expiresIn: '24h' }
     )
 }
 userschema.methods.generateRefreshToken = function () {

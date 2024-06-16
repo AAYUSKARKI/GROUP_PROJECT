@@ -62,6 +62,33 @@ const createOrder = asynchandler(async (req, res) => {
     )
 })
 
+const verifyPayment = asynchandler(async (req,res)=>{
+    console.log('i am checking the payment')
+    const {transaction_code,status,total_amount,transaction_uuid,product_code,signed_field_names,signature} =req.body
+console.log(req.body,'is body of req')
+    const findorder = await Order.findOne({user:req.user._id,transaction_uuid})
+     console.log('findorder',findorder)
+    if(!findorder){
+        throw new Apierror(404, "orders not found");
+    }
+
+    if(status == 'COMPLETE'){
+        findorder.isPaid = true
+        findorder.paidAt = new Date();
+        await findorder.save()
+
+        res.status(200).json(
+            new Apiresponse(
+                200,
+                findorder,
+                "orders fetched successfully"
+            )
+        )
+    }
+    else{
+            throw new Apierror(404, "something went wrong");
+    }
+})
 const getOrders = asynchandler(async (req, res) => {
     const orders = await Order.find({ user: req.user._id }).populate("user").populate("orderItems.product");
     if (!orders) {
@@ -112,5 +139,6 @@ export {
     createOrder,
     getOrders,
     getOrderById,
+    verifyPayment,
     deleteOrder
 }
