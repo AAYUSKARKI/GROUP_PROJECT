@@ -63,11 +63,11 @@ const createOrder = asynchandler(async (req, res) => {
 })
 
 const verifyPayment = asynchandler(async (req,res)=>{
-    console.log('i am checking the payment')
+    // console.log('i am checking the payment')
     const {transaction_code,status,total_amount,transaction_uuid,product_code,signed_field_names,signature} =req.body
-console.log(req.body,'is body of req')
+// console.log(req.body,'is body of req')
     const findorder = await Order.findOne({user:req.user._id,transaction_uuid})
-     console.log('findorder',findorder)
+    //  console.log('findorder',findorder)
     if(!findorder){
         throw new Apierror(404, "orders not found");
     }
