@@ -2,13 +2,19 @@ import { useState } from "react";
 import { FaShippingFast } from "react-icons/fa";
 import { BsCashCoin } from "react-icons/bs";
 import Homecards from "../Cards/Homecards";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
 import useGetproduct from "@/hooks/useGetprouct";
 import { useParams } from "react-router-dom";
 
 function CardDetailsDisplay() {
 
-    const [count , setCounter] = useState(0);
+  let response:any;
+    const [count , setCounter] = useState(1);
 
+    const navigate = useNavigate();
 
     const {id} = useParams();
     const {Singleproduct} = useGetproduct(id as string);
@@ -22,6 +28,31 @@ function CardDetailsDisplay() {
 
     const handleCounterIncrease = ()=>{
         setCounter(prev =>(prev + 1))
+    }
+
+    const { user } = useSelector((state: any) => state.user)
+
+    const handleAddToCart = async() => {
+      if(user?.user ) {
+        console.log('user', user?.user)
+        axios.defaults.withCredentials = true
+       response = await axios.post('https://lucidmerch.onrender.com/api/v1/carts/createcart', {
+        product: Singleproduct._id,
+        quantity: count
+      })
+      console.log(response.data)
+      toast.success(response.data.message)
+      }
+      else {
+        toast.error('Please Login First')
+        navigate('/login')
+      }
+      
+    }
+
+    const handleBuyNow = ()=>{
+        handleAddToCart();
+        navigate(`/order/${response.data.data._id}`)
     }
   
   return (
@@ -55,8 +86,8 @@ function CardDetailsDisplay() {
              </div>
 
             <div className="flex gap-4 p-12">
-                <button className='text-sm bg-orange-600 hover:bg-orange-700 w-full text-white px-3 py-0.5 rounded-full'>Buy Now </button>
-                <button className='text-sm bg-orange-600 hover:bg-orange-700 w-full h-12 text-white px-3 py-0.5 rounded-full'>ADD to Cart</button>
+                <button className='text-sm bg-orange-600 hover:bg-orange-700 w-full text-white px-3 py-0.5 rounded-full' onClick={handleBuyNow}>Buy Now </button>
+                <button className='text-sm bg-orange-600 hover:bg-orange-700 w-full h-12 text-white px-3 py-0.5 rounded-full' onClick={handleAddToCart}>ADD to Cart</button>
             </div>
 
 

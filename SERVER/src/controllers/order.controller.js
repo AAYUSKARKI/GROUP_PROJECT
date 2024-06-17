@@ -90,7 +90,7 @@ const verifyPayment = asynchandler(async (req,res)=>{
     }
 })
 const getOrders = asynchandler(async (req, res) => {
-    const orders = await Order.find({ user: req.user._id }).populate("user").populate("orderItems.product");
+    const orders = await Order.find({ user: req.user._id,isPaid: true}).populate("user").populate("orderItems.product");
     if (!orders) {
         throw new Apierror(404, "orders not found");
     }
@@ -135,10 +135,50 @@ const deleteOrder = asynchandler(async (req, res) => {
     )
 })
 
+const getAllOrders = asynchandler(async (req, res) => {
+    const orders = await Order.find({isPaid: true}).populate("user").populate("orderItems.product");
+    if (!orders) {
+        throw new Apierror(404, "orders not found");
+    }
+    res.status(200).json(
+        new Apiresponse(
+            200,
+            orders,
+            "orders fetched successfully"
+        )
+    )
+})
+
+const updateOrderstatus = asynchandler(async (req, res) => {
+    const { status } = req.body;
+    const { orderId } = req.params;
+    if (!status || !orderId) {
+        throw new Apierror(400, "All fields are required");
+    }
+
+    const order = await Order.findByIdAndUpdate(orderId, { status }, {
+        new: true, // Return the modified document rather than the original
+        runValidators: true, // Run validators to ensure data is correct
+    });
+
+    if (!order) {
+        throw new Apierror(404, "order not found");
+    }
+
+    res.status(200).json(
+        new Apiresponse(
+            200,
+            order,
+            "order updated successfully"
+        )
+    )
+})
 export { 
     createOrder,
     getOrders,
     getOrderById,
     verifyPayment,
-    deleteOrder
+    deleteOrder,
+    getAllOrders,
+    updateOrderstatus
 }

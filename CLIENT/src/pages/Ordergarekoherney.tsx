@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 
 interface MyData {
@@ -14,6 +15,8 @@ interface MyData {
 }
 
 function Ordergarekoherney() {
+
+  const navigate = useNavigate();
   const [response, setResponse] = useState<string>('');
   const [searchParams] = useSearchParams();
 
@@ -54,7 +57,7 @@ function Ordergarekoherney() {
       <div className="text-2xl flex items-center justify-center">
         Order {data?.status}
       </div>
-      <div className="bg-slate-800 text-lg p-2 m-2 flex text-white justify-center items-center">
+      <div onClick={()=>{navigate('/vieworders')}} className="bg-slate-800 text-lg p-2 m-2 flex text-white justify-center items-center">
 <p>View your</p><p className="p-4 text-xl text-green-400 cursor-pointer">Orders</p><p>Here</p>
       </div>
     </>

@@ -5,7 +5,9 @@ import {
     getOrders,
     getOrderById,
     deleteOrder,
-    verifyPayment
+    verifyPayment,
+    getAllOrders,
+    updateOrderstatus
 } from "../controllers/order.controller.js";
 
 
@@ -21,6 +23,10 @@ router.route("/verify").post(verifyJWT, verifyPayment);
 router.route("/getorderbyid/:id").get(verifyJWT, getOrderById);
 
 router.route("/deleteorder/:id").delete(verifyJWT, deleteOrder);
+
+router.route("/getallorders").get(verifyJWT, getAllOrders);
+
+router.route("/updateorderstatus/:orderId").put(verifyJWT, updateOrderstatus);
 
 
 export default router

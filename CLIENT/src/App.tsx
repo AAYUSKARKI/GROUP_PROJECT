@@ -14,7 +14,9 @@ import Navbar from './components/Navbar/Navbar';
 import OrderForm from './pages/Orderfrom';
 import CategorylandingPage from './components/categoryFilter/CategorylandingPage';
 import Paymentpage from './pages/Paymentpage';
+import Shop from './components/Shop/Shop';
 import Stat from './admin/Stat';
+import Vieworder from './pages/Vieworders';
 import Adduser from './admin/Adduser';
 import Searchgarekodekhaune from './components/searchproduct/Searchgarekodekhaune';
 import Updateuser from './admin/Updateuser';
@@ -35,6 +37,8 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route element={<PrivateRoute />}>
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/vieworders" element={<Vieworder />} />
             <Route path="/carts" element={<Cartsdetail />} />
             <Route path="/payment/:id" element={<Paymentpage />} />
             <Route path="/order/:id" element={<OrderForm />} />
@@ -49,8 +53,9 @@ const App: React.FC = () => {
             <Route path="/admin/add-product" element={<Addproduct />} />
             <Route path="/admin/add-user" element={<Adduser />} />
             <Route path="/admin/update-user/:id" element={<Updateuser />} />
-            <Route path="/admin/view-orders" element={<Vieworders />} />
+            <Route path="/admin/orders" element={<Vieworders />} />
             <Route path="/admin/users" element={<Viewusers />} />
+
             <Route path="/admin/products" element={<Viewproducts />} />
             <Route path="/admin/update-product/:id" element={<Updateproduct />} />
           </Route>
