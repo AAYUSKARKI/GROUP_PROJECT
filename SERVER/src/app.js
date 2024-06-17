@@ -12,7 +12,7 @@ const app = express();
 
 //dotenv config
 dotenv.config({path : './.env'})
-console.log(process.env.CORS_ORIGIN);
+// console.log(process.env.CORS_ORIGIN);
 
 //google auth config
 // const CLIENT_ID = process.env.CLIENT_ID;
@@ -94,10 +94,23 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
   app.get('/pay/esewa',esewa)
 
 
-app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
-}))
+  const allowedOrigins = ['https://group-project-livid.vercel.app', 'http://localhost:5173','https://lucidmerch.netlify.app'];
+
+  const corsOptions = {
+    origin: function(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Length', 'X-Foo'],
+    credentials: true, 
+  };
+  
+  app.use(cors(corsOptions));
 app.use(express.json({limit:"16kb"}))
 app.use(express.urlencoded({extended:true,limit:"16kb"}))
 app.use(express.static("public"))
