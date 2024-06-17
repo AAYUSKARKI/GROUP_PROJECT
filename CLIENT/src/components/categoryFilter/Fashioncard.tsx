@@ -18,7 +18,7 @@ function FashionCard({product} : any) {
   const handleAddToCart = async() => {
     if(user?.user ) {
     axios.defaults.withCredentials = true
-    const response = await axios.post('https://lucidmerch.onrender.com/api/v1/carts/createcart', {
+    const response = await axios.post('https://group-project-3-li5z.onrender.com/api/v1/carts/createcart', {
       product: product._id,
       quantity: qty
     })

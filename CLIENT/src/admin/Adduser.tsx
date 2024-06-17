@@ -56,7 +56,7 @@ function Adduser() {
 
         try {
           setLoading(true);
-          const response = await axios.post("https://lucidmerch.onrender.com/api/v1/users/register", formData)
+          const response = await axios.post("https://group-project-3-li5z.onrender.com/api/v1/users/register", formData)
 
           if (response.data.success) {
             toast.success(response.data.message);

@@ -44,7 +44,7 @@ function Cartsdetail() {
         const confirm = window.confirm("Are you sure you want to delete this item?");
         if (confirm) {
             try {
-                const response = await axios.delete(`https://lucidmerch.onrender.com/api/v1/carts/deletecart/${id}`);
+                const response = await axios.delete(`https://group-project-3-li5z.onrender.com/api/v1/carts/deletecart/${id}`);
                 toast.success(response.data.message);
                 console.log(response.data);
             } catch (error) {

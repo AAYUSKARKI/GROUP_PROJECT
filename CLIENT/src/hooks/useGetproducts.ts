@@ -7,7 +7,7 @@ const useGetproducts = (currentpage:number,limit:number) => {
     const [products, setProducts] = useState([])
 
     const getUsers = async () => {
-        const response = await axios.get("https://lucidmerch.onrender.com/api/v1/products/getallproducts?page="+currentpage+"&limit="+limit)
+        const response = await axios.get("https://group-project-3-li5z.onrender.com/api/v1/products/getallproducts?page="+currentpage+"&limit="+limit)
         console.log('response from products',response.data.data)
         setProducts(response.data.data)
     }

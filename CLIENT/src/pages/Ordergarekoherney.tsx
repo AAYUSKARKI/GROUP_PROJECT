@@ -38,7 +38,7 @@ function Ordergarekoherney() {
     try {
       if (data) {
         axios.defaults.withCredentials=true
-        const res = await axios.post<{ data: string }>('https://lucidmerch.onrender.com/api/v1/orders/verify', data);
+        const res = await axios.post<{ data: string }>('https://group-project-3-li5z.onrender.com/api/v1/orders/verify', data);
         setResponse(res.data.data);
         console.log(response)
       }

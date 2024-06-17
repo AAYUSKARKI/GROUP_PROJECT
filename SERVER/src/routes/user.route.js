@@ -49,7 +49,7 @@ router.route("/register").post(
 router.route("/login").post(loginuser)
 
 //seruce routes
-router.route("/logout").post(verifyJWT, logoutuser)
+router.route("/logout").post(logoutuser)
 router.route("/refreshtoken").post(refreshaccesstoken)
 router.route("/changepassword").post(verifyJWT, changecurrentpassword)
 router.route("/currentuser").get(verifyJWT, getcurrentuser)

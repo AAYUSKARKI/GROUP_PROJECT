@@ -10,7 +10,7 @@ const useGetgoogleloginuser = () => {
         const getuser = async () => {
             try {
                 axios.defaults.withCredentials = true
-                const res = await axios.get("https://lucidmerch.onrender.com/auth/user")
+                const res = await axios.get("https://group-project-3-li5z.onrender.com/auth/user")
                 console.log(res.data)
                 dispatch(setuser(res.data))
             } catch (error) {

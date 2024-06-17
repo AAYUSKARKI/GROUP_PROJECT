@@ -19,7 +19,7 @@ const useGetproduct = (id: string) => {
     const [Singleproduct, setProduct] = useState({} as Product)
 
     const getproductbyid = async () => {
-        const response = await axios.get(`https://lucidmerch.onrender.com/api/v1/products/getproductbyid/${id}`)
+        const response = await axios.get(`https://group-project-3-li5z.onrender.com/api/v1/products/getproductbyid/${id}`)
         console.log('response from product',response.data.data)
         setProduct(response.data.data)
     }

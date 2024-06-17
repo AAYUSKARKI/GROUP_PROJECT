@@ -28,7 +28,7 @@ const handlesubmit = async(e:any)=>{
   try {
 
     setLoading(true)
-    const res = await axios.post("https://lucidmerch.onrender.com/api/v1/users/login", user)
+    const res = await axios.post("https://group-project-3-li5z.onrender.com/api/v1/users/login", user)
     console.log('data is', res.data.data)
     dispatch(setuser(res.data.data))
     console.log(res.data.data.accesstoken, 'accesstoken')

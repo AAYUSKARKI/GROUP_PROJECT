@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 const useGetallproducts = () => {
     const dispatch = useDispatch()
     const getallproducts = async () => {
-        const response = await axios.get("https://lucidmerch.onrender.com/api/v1/products/allproducts")
+        const response = await axios.get("https://group-project-3-li5z.onrender.com/api/v1/products/allproducts")
         console.log('response from products',response.data.data)
         dispatch(setproduct(response.data.data))
     }

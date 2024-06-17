@@ -26,7 +26,7 @@ function Viewproducts() {
 
     const handleDelete = async (id: string) => {
         try {
-            const response = await axios.delete(`https://lucidmerch.onrender.com/api/v1/products/deleteproduct/${id}`)
+            const response = await axios.delete(`https://group-project-3-li5z.onrender.com/api/v1/products/deleteproduct/${id}`)
             toast.success(response.data.message)
             console.log(response.data)
         } catch (error) {

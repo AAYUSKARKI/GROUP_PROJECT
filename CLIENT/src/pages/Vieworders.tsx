@@ -29,7 +29,7 @@ const Vieworder: React.FC = () => {
   const getOrder = async () => {
     try {
       axios.defaults.withCredentials = true;
-      const res = await axios.get<IOrderResponse>("https://lucidmerch.onrender.com/api/v1/orders/getorders");
+      const res = await axios.get<IOrderResponse>("https://group-project-3-li5z.onrender.com/api/v1/orders/getorders");
       setOrders(res.data.data);
     } catch (error) {
       console.error(error);

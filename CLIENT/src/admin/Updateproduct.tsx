@@ -84,7 +84,7 @@ function Updateproduct() {
 
         try {
             setLoading(true)
-            const response = await axios.put(`https://lucidmerch.onrender.com/api/v1/products/updateproduct/${id}`, formData)
+            const response = await axios.put(`https://group-project-3-li5z.onrender.com/api/v1/products/updateproduct/${id}`, formData)
             console.log(response.data)
             setLoading(false)
             toast.success('Product added successfully')

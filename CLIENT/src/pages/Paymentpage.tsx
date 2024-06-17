@@ -15,7 +15,7 @@ function Paymentpage() {
     async function getDetails() {
 
       setLoading(true);
-      const response = await axios.get(`https://lucidmerch.onrender.com/api/v1/orders/getorderbyid/${id}`);
+      const response = await axios.get(`https://group-project-3-li5z.onrender.com/api/v1/orders/getorderbyid/${id}`);
 
       console.log(response.data.data);
 

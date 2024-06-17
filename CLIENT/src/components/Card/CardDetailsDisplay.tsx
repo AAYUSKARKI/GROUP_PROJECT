@@ -36,9 +36,10 @@ function CardDetailsDisplay() {
       if(user?.user ) {
         console.log('user', user?.user)
         axios.defaults.withCredentials = true
-       response = await axios.post('https://lucidmerch.onrender.com/api/v1/carts/createcart', {
+       response = await axios.post('https://group-project-3-li5z.onrender.com/api/v1/carts/createcart', {
         product: Singleproduct._id,
-        quantity: count
+        quantity: count,
+        userid: user?.user._id
       })
       console.log(response.data)
       toast.success(response.data.message)

@@ -4,9 +4,9 @@ import {Apierror} from "../utils/apierror.js";
 import {Apiresponse} from "../utils/apiresponse.js";
 
 const createCart = asynchandler(async (req, res) => {
-    const { quantity, product } = req.body;
+    const { quantity, product, userid } = req.body;
     console.log(req.body);
-    const user = req.user._id;
+    const user = userid;
 
     if (!quantity || !product) {
         throw new Apierror(400, "All fields are required");

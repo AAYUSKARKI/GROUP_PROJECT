@@ -68,10 +68,10 @@ function Navbar() {
   }
  
 
-  //https://lucidmerch.onrender.com/api/v1/products/autocompletesearch?key=a
+  //https://group-project-3-li5z.onrender.com/api/v1/products/autocompletesearch?key=a
 
   const fetchSuggestions = async () => {
-    const response = await axios.get(`https://lucidmerch.onrender.com/api/v1/products/autocompletesearch?key=${search}`)
+    const response = await axios.get(`https://group-project-3-li5z.onrender.com/api/v1/products/autocompletesearch?key=${search}`)
     console.log(response.data.data)
     setSuggestions(response.data.data)
   }
@@ -113,16 +113,16 @@ function Navbar() {
   const cookie =Cookies.get('accesstoken')
   console.log('cookie',cookie)
 
-  useEffect(() => {
-    // If cookie is not present, set user to null
-    if (!cookie) {
-      dispatch(setuser(null));
-    }
-  }, [cookie, dispatch]);
+  // useEffect(() => {
+  //   // If cookie is not present, set user to null
+  //   if (!cookie) {
+  //     dispatch(setuser(null));
+  //   }
+  // }, [cookie, dispatch]);
 
   const handleLogout = async() => {
     axios.defaults.withCredentials = true
-    const res= await axios.post('https://lucidmerch.onrender.com/api/v1/users/logout')
+    const res= await axios.post('https://group-project-3-li5z.onrender.com/api/v1/users/logout')
     console.log(res.data.message)
     toast.success(res.data.message)
     dispatch(setuser(null))

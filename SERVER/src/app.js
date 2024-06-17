@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import cookieSession from "cookie-session";
 import { User } from "./models/user.model.js";
 import passport from "passport";
 import passportGoogleOauth20 from "passport-google-oauth20";
@@ -18,12 +19,14 @@ dotenv.config({path : './.env'})
 // const CLIENT_ID = process.env.CLIENT_ID;
 
 // const CLIENT_SECRET = process.env.CLIENT_SECRET;
-
+console.log(process.env.SESSION_SECRET)
+console.log(process.env.MONGODB_URI)
 // Session configuration with connect-mongo
 app.use(session({
   secret: process.env.SESSION_SECRET,  // Use a strong secret for session
   resave: false,
   saveUninitialized: false,
+  secure: true,
   store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URI,
       collectionName: 'sessions',  // Name of the collection to store sessions
@@ -115,6 +118,12 @@ app.use(express.json({limit:"16kb"}))
 app.use(express.urlencoded({extended:true,limit:"16kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+  maxAge: 24 * 60 * 60 * 1000,
+  secure: true
+}))
 
 //routes import
 import userRouter from './routes/user.route.js'
