@@ -113,6 +113,13 @@ function Navbar() {
   const cookie =Cookies.get('accesstoken')
   console.log('cookie',cookie)
 
+  useEffect(() => {
+    // If cookie is not present, set user to null
+    if (!cookie) {
+      dispatch(setuser(null));
+    }
+  }, [cookie, dispatch]);
+
   const handleLogout = async() => {
     axios.defaults.withCredentials = true
     const res= await axios.post('https://lucidmerch.onrender.com/api/v1/users/logout')
@@ -274,8 +281,12 @@ function Navbar() {
                   </div>
                 ) : (
                   <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
-                    <Link to={"/login"} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
-                    <Link to={"/signup"} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Register</Link>
+                    <li className="cursor-pointer text-xl text-black hover:text-slate-500">
+                  <Link to={"/login"}>Login</Link>
+                </li>
+                <li className="cursor-pointer text-xl text-black hover:text-slate-500">
+                  <Link to={"/register"}>Register</Link>
+                </li>
                   </div>
                 )
               )}
