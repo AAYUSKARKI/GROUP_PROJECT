@@ -31,7 +31,7 @@ const Vieworder: React.FC = () => {
   const getOrder = async () => {
     try {
       axios.defaults.withCredentials = true;
-      const res = await axios.post<IOrderResponse>("http://localhost:7000/api/v1/orders/getorders",{user:user.user._id});
+      const res = await axios.post<IOrderResponse>("https://lucid-merch-2yfv.onrender.com/api/v1/orders/getorders",{user:user.user._id});
       setOrders(res.data.data);
     } catch (error) {
       console.error(error);

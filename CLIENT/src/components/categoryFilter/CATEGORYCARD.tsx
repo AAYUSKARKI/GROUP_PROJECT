@@ -18,7 +18,7 @@ function Categorycard({product} : any) {
 
   const handleAddToCart = async() => {
     axios.defaults.withCredentials = true
-    const response = await axios.post('http://localhost:7000/api/v1/carts/createcart', {
+    const response = await axios.post('https://lucid-merch-2yfv.onrender.com/api/v1/carts/createcart', {
       product: product._id,
       quantity: qty,
       userid:user.user._id

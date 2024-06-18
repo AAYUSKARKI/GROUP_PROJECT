@@ -22,7 +22,7 @@ const useGetproductByCategory = (category : string) => {
     const getProductsByCategory = async () => {
         try {
             axios.defaults.withCredentials = true
-          const response = await axios.get(`http://localhost:7000/api/v1/products/getproductbycategory/${category}`);
+          const response = await axios.get(`https://lucid-merch-2yfv.onrender.com/api/v1/products/getproductbycategory/${category}`);
           setFilteredData(response.data.data);
         } catch (error) {
           console.log(error);

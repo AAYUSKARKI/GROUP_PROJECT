@@ -68,10 +68,10 @@ function Navbar() {
   }
  
 
-  //http://localhost:7000/api/v1/products/autocompletesearch?key=a
+  //https://lucid-merch-2yfv.onrender.com/api/v1/products/autocompletesearch?key=a
 
   const fetchSuggestions = async () => {
-    const response = await axios.get(`http://localhost:7000/api/v1/products/autocompletesearch?key=${search}`)
+    const response = await axios.get(`https://lucid-merch-2yfv.onrender.com/api/v1/products/autocompletesearch?key=${search}`)
     console.log(response.data.data)
     setSuggestions(response.data.data)
   }
@@ -122,7 +122,7 @@ function Navbar() {
 
   const handleLogout = async() => {
     axios.defaults.withCredentials = true
-    const res= await axios.post('http://localhost:7000/api/v1/users/logout')
+    const res= await axios.post('https://lucid-merch-2yfv.onrender.com/api/v1/users/logout')
     console.log(res.data.message)
     toast.success(res.data.message)
     dispatch(setuser(null))

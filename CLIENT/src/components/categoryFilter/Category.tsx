@@ -34,7 +34,7 @@ function Category() {
 
     const getProductsByCategory = async (category: string) => {
         try {
-          const response = await axios.get(`http://localhost:7000/api/v1/products/getproductbycategory/${category}`);
+          const response = await axios.get(`https://lucid-merch-2yfv.onrender.com/api/v1/products/getproductbycategory/${category}`);
           setFilteredData(response.data.data);
           navigate(`/category/${category}`);
         } catch (error) {

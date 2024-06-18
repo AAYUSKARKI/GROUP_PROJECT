@@ -55,7 +55,7 @@ const useGetcartbyid = (id : string) => {
 
     const getCart = async () => {
         axios.defaults.withCredentials = true
-        const response = await axios.post(`http://localhost:7000/api/v1/carts/getsinglecart/${id}`,{user:user.user._id})
+        const response = await axios.post(`https://lucid-merch-2yfv.onrender.com/api/v1/carts/getsinglecart/${id}`,{user:user.user._id})
         console.log('response from products',response.data.data)
         setCart(response.data.data)
     }

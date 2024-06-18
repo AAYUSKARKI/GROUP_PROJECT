@@ -79,7 +79,7 @@ function Addproduct() {
 
         try {
             setLoading(true)
-            const response = await axios.post('http://localhost:7000/api/v1/products/createproduct', formData)
+            const response = await axios.post('https://lucid-merch-2yfv.onrender.com/api/v1/products/createproduct', formData)
             console.log(response.data)
             setLoading(false)
             toast.success('Product added successfully')
