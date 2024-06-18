@@ -79,7 +79,7 @@ function Addproduct() {
 
         try {
             setLoading(true)
-            const response = await axios.post('https://group-project-3-li5z.onrender.com/api/v1/products/createproduct', formData)
+            const response = await axios.post('http://localhost:7000/api/v1/products/createproduct', formData)
             console.log(response.data)
             setLoading(false)
             toast.success('Product added successfully')

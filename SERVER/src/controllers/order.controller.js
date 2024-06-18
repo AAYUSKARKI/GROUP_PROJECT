@@ -5,12 +5,12 @@ import {Apiresponse} from "../utils/apiresponse.js";
 import { v4 as uuidv4 } from 'uuid';
 import CryptoJS from "crypto-js";
 const createOrder = asynchandler(async (req, res) => {
-    const { quantity,productid,fullname, address, city, postalCode, country, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice } = req.body;
+    const { quantity,productid,user,fullname, address, city, postalCode, country, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice } = req.body;
     console.log(req.body);
     if (!quantity || !productid || !paymentMethod || !itemsPrice || !taxPrice || !shippingPrice || !totalPrice) {
         throw new Apierror(400, "All fields are required");
     }
-    const user = req.user._id;
+
 
     const orderItems = [
         {
@@ -64,9 +64,12 @@ const createOrder = asynchandler(async (req, res) => {
 
 const verifyPayment = asynchandler(async (req,res)=>{
     // console.log('i am checking the payment')
-    const {transaction_code,status,total_amount,transaction_uuid,product_code,signed_field_names,signature} =req.body
+    const {transaction_code,status,total_amount,transaction_uuid,product_code,signed_field_names,signature} =req.body.data
 // console.log(req.body,'is body of req')
-    const findorder = await Order.findOne({user:req.user._id,transaction_uuid})
+const {user} = req.body;
+console.log(user)
+console.log(req.body.data)
+    const findorder = await Order.findOne({user:user,transaction_uuid})
     //  console.log('findorder',findorder)
     if(!findorder){
         throw new Apierror(404, "orders not found");
@@ -90,7 +93,8 @@ const verifyPayment = asynchandler(async (req,res)=>{
     }
 })
 const getOrders = asynchandler(async (req, res) => {
-    const orders = await Order.find({ user: req.user._id,isPaid: true}).populate("user").populate("orderItems.product");
+    const {user} = req.body;
+    const orders = await Order.find({ user:user,isPaid: true}).populate("user").populate("orderItems.product");
     if (!orders) {
         throw new Apierror(404, "orders not found");
     }

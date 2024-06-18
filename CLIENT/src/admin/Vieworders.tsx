@@ -30,7 +30,7 @@ const Vieworders: React.FC = () => {
   const getOrder = async () => {
     try {
       axios.defaults.withCredentials = true;
-      const res = await axios.get<IOrderResponse>("https://group-project-3-li5z.onrender.com/api/v1/orders/getallorders");
+      const res = await axios.get<IOrderResponse>("http://localhost:7000/api/v1/orders/getallorders");
       setOrders(res.data.data);
     } catch (error) {
       console.error(error);
@@ -39,7 +39,7 @@ const Vieworders: React.FC = () => {
 
   const updateOrderStatus = async (orderId: string, status: string) => {
     try {
-      await axios.put(`https://group-project-3-li5z.onrender.com/api/v1/orders/updateorderstatus/${orderId}`, { status });
+      await axios.put(`http://localhost:7000/api/v1/orders/updateorderstatus/${orderId}`, { status });
       toast.success('Order status updated successfully');
       // Refresh the orders list after updating the status
       getOrder();

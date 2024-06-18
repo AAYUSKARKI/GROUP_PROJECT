@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; 
+import { useSelector } from 'react-redux';
 
 interface IProduct {
   _id: string;
@@ -24,12 +25,13 @@ export interface IOrderResponse {
 }
 
 const Vieworder: React.FC = () => {
+  const { user } = useSelector((state: any) => state.user)
   const [orders, setOrders] = useState<IOrder[]>([]);
 
   const getOrder = async () => {
     try {
       axios.defaults.withCredentials = true;
-      const res = await axios.get<IOrderResponse>("https://group-project-3-li5z.onrender.com/api/v1/orders/getorders");
+      const res = await axios.post<IOrderResponse>("http://localhost:7000/api/v1/orders/getorders",{user:user.user._id});
       setOrders(res.data.data);
     } catch (error) {
       console.error(error);

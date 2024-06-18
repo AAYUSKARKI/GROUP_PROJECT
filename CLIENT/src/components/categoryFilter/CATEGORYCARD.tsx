@@ -4,7 +4,10 @@ import { FaPlus, FaMinus } from 'react-icons/fa';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 function Categorycard({product} : any) {
+
+  const { user } = useSelector((state: any) => state.user)
   const navigate = useNavigate();
 
   const [qty, setQty] = useState(1);
@@ -15,9 +18,10 @@ function Categorycard({product} : any) {
 
   const handleAddToCart = async() => {
     axios.defaults.withCredentials = true
-    const response = await axios.post('https://group-project-3-li5z.onrender.com/api/v1/carts/createcart', {
+    const response = await axios.post('http://localhost:7000/api/v1/carts/createcart', {
       product: product._id,
-      quantity: qty
+      quantity: qty,
+      userid:user.user._id
     })
     console.log(response.data)
     toast.success(response.data.message)

@@ -55,7 +55,7 @@ const useGetcarts = () => {
     const getCarts = async () => {
       if(user?.user){
         axios.defaults.withCredentials = true
-        const response = await axios.get("https://group-project-3-li5z.onrender.com/api/v1/carts/getcart")
+        const response = await axios.post("http://localhost:7000/api/v1/carts/getcart",{user:user.user._id})
         console.log('response from products',response.data.data)
         setCarts(response.data.data)
       }

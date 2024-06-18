@@ -19,7 +19,7 @@ function HomeCard({product} : any) {
     if(user?.user ) {
       console.log('user', user?.user)
       axios.defaults.withCredentials = true
-     const response = await axios.post('https://group-project-3-li5z.onrender.com/api/v1/carts/createcart', {
+     const response = await axios.post('http://localhost:7000/api/v1/carts/createcart', {
       product: product._id,
       quantity: qty,
       userid: user?.user._id

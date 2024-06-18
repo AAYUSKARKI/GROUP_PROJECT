@@ -3,7 +3,6 @@ import cors from 'cors';
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import cookieSession from "cookie-session";
 import { User } from "./models/user.model.js";
 import passport from "passport";
 import passportGoogleOauth20 from "passport-google-oauth20";
@@ -113,17 +112,11 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
     credentials: true, 
   };
   
-  app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(express.json({limit:"16kb"}))
 app.use(express.urlencoded({extended:true,limit:"16kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
-app.use(cookieSession({
-  name: 'session',
-  keys: ['key1', 'key2'],
-  maxAge: 24 * 60 * 60 * 1000,
-  secure: true
-}))
 
 //routes import
 import userRouter from './routes/user.route.js'

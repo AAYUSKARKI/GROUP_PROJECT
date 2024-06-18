@@ -20,7 +20,7 @@ function Viewusers() {
         const confirm = window.confirm("Are you sure you want to delete this user?");
         if (confirm) {
           try {
-            const response = await axios.delete(`https://group-project-3-li5z.onrender.com/api/v1/users/deleteuser/${id}`);
+            const response = await axios.delete(`http://localhost:7000/api/v1/users/deleteuser/${id}`);
             if (response.data.success) {
               toast.success(response.data.message);
               console.log(response.data);

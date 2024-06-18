@@ -8,7 +8,7 @@ const createCart = asynchandler(async (req, res) => {
     console.log(req.body);
     const user = userid;
 
-    if (!quantity || !product) {
+    if (!quantity || !product || !user) {
         throw new Apierror(400, "All fields are required");
     }
 
@@ -42,7 +42,7 @@ const createCart = asynchandler(async (req, res) => {
 })
 
 const getCart = asynchandler(async (req, res) => {
-    const user = req.user._id;
+    const {user} = req.body;
     const cart = await Cart.find({ user }).populate("product").populate("user");
     if (!cart) {
         throw new Apierror(404, "Cart not found");
@@ -85,6 +85,7 @@ const updateCart = asynchandler(async (req, res) => {
 })
 
 const deleteCart = asynchandler(async (req, res) => {
+    console.log('delete cart is running')
     const cart = await Cart.findByIdAndDelete(req.params.id);
     if (!cart) {
         throw new Apierror(404, "Cart not found");

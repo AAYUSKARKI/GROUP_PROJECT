@@ -13,7 +13,7 @@ function Searchgarekodekhaune() {
     useEffect(() => {
 
         const getProducts = async () => {
-            const response = await axios.get(`https://group-project-3-li5z.onrender.com/api/v1/products/searchproduct?key=${keyword}`)
+            const response = await axios.get(`http://localhost:7000/api/v1/products/searchproduct?key=${keyword}`)
             setSearchedItems(response.data.data)
         }
 

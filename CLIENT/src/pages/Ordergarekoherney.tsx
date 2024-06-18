@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState,useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 
@@ -16,6 +17,7 @@ interface MyData {
 
 function Ordergarekoherney() {
 
+  const { user } = useSelector((state: any) => state.user)
   const navigate = useNavigate();
   const [response, setResponse] = useState<string>('');
   const [searchParams] = useSearchParams();
@@ -38,7 +40,7 @@ function Ordergarekoherney() {
     try {
       if (data) {
         axios.defaults.withCredentials=true
-        const res = await axios.post<{ data: string }>('https://group-project-3-li5z.onrender.com/api/v1/orders/verify', data);
+        const res = await axios.post<{ data: string }>('http://localhost:7000/api/v1/orders/verify',{data,user:user.user._id});
         setResponse(res.data.data);
         console.log(response)
       }

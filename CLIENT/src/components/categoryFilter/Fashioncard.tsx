@@ -18,9 +18,10 @@ function FashionCard({product} : any) {
   const handleAddToCart = async() => {
     if(user?.user ) {
     axios.defaults.withCredentials = true
-    const response = await axios.post('https://group-project-3-li5z.onrender.com/api/v1/carts/createcart', {
+    const response = await axios.post('http://localhost:7000/api/v1/carts/createcart', {
       product: product._id,
-      quantity: qty
+      quantity: qty,
+      userid:user.user._id
     })
     console.log(response.data)
     toast.success(response.data.message)

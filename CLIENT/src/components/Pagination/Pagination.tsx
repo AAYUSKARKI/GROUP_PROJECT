@@ -30,7 +30,7 @@ function Pagination() {
   const fetchPaginatedProducts = async () => {
     try {
       const response = await axios.get(
-        `https://group-project-3-li5z.onrender.com/api/v1/products/getallproducts?page=${currentPage}&limit=${calculateLimit(currentPage)}`
+        `http://localhost:7000/api/v1/products/getallproducts?page=${currentPage}&limit=${calculateLimit(currentPage)}`
       );
       setPaginatedProducts(response.data.data);
     } catch (error) {

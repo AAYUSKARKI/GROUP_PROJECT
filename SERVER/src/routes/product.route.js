@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js"
-import { verifyJWT } from "../middlewares/auth.middleware.js";
+// import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
     createProduct,
     getAllProducts,
@@ -41,7 +41,7 @@ router.route("/gettopproducts").get(getTopProducts);
 
 router.route("/getproductbydiscount").get(getProductByDiscount);
 
-router.route("/rateproduct/:id").post(verifyJWT, rateProduct);
+router.route("/rateproduct/:id").post(rateProduct);
 
 router.route("/autocompletesearch").get(AutoCompletesearch);
 

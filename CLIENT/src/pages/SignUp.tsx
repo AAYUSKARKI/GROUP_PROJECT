@@ -58,7 +58,7 @@ function SignUp() {
 
         try {
           setLoading(true);
-          const response = await axios.post("https://group-project-3-li5z.onrender.com/api/v1/users/register", formData)
+          const response = await axios.post("http://localhost:7000/api/v1/users/register", formData)
 
           if (response.data.success) {
             toast.success(response.data.message);
@@ -81,7 +81,7 @@ function SignUp() {
       };
 
       const handleGoogleLogin = () => {
-        window.open("https://group-project-3-li5z.onrender.com/auth/google/login", "_self");
+        window.open("http://localhost:7000/auth/google/login", "_self");
       };
 
 

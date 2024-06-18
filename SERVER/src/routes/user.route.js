@@ -18,7 +18,7 @@ import {
     from "../controllers/user.controller.js";
 
 import { upload } from "../middlewares/multer.middleware.js"
-import { verifyJWT } from "../middlewares/auth.middleware.js";
+// import { verifyJWT } from "../middlewares/auth.middleware.js";
 const router = Router()
 
 
@@ -51,13 +51,13 @@ router.route("/login").post(loginuser)
 //seruce routes
 router.route("/logout").post(logoutuser)
 router.route("/refreshtoken").post(refreshaccesstoken)
-router.route("/changepassword").post(verifyJWT, changecurrentpassword)
-router.route("/currentuser").get(verifyJWT, getcurrentuser)
-router.route("/updateaccount").patch(verifyJWT, updateaccountdetails)
-router.route("/avatar").patch(verifyJWT, upload.single("avatar"), updateuseravatar)
+router.route("/changepassword").post(changecurrentpassword)
+router.route("/currentuser").get(getcurrentuser)
+router.route("/updateaccount").patch(updateaccountdetails)
+router.route("/avatar").patch(upload.single("avatar"), updateuseravatar)
 router.route("/allusers").get(getallusers)
 router.route("/getuserbyid/:id").get(getuserbyid)
-router.route("/deleteuser/:id").delete(verifyJWT, deleteuser)
+router.route("/deleteuser/:id").delete(deleteuser)
 router.route("/forgetpassword").post(forgetpassword)
 router.route("/resetpassword/:token").post(resetpassword)
 

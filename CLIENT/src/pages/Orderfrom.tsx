@@ -5,9 +5,12 @@ import { useParams,useNavigate } from "react-router-dom";
 import useGetcartbyid from "@/hooks/useGetcartbyid";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const OrderForm = () => {
 
+    const { user } = useSelector((state: any) => state.user)
+    
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -33,7 +36,7 @@ const OrderForm = () => {
     // Here you can handle the form submission, e.g., send data to server
     try {
       axios.defaults.withCredentials = true
-      const response = await axios.post("https://group-project-3-li5z.onrender.com/api/v1/orders/createorder",
+      const response = await axios.post("http://localhost:7000/api/v1/orders/createorder",
       {
         fullname: formData.fullName,
         phone: formData.phone,
@@ -47,7 +50,8 @@ const OrderForm = () => {
         itemsPrice: cart.product.price,
         totalPrice: cart.product.price*cart.quantity,
         taxPrice: 200,
-        shippingPrice: 200
+        shippingPrice: 200,
+        user:user.user._id
       })
       console.log(response.data)
       toast.success(response.data.message)

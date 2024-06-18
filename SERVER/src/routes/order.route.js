@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyJWT } from "../middlewares/auth.middleware.js";
+// import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
     createOrder,
     getOrders,
@@ -14,19 +14,19 @@ import {
 const router = Router();
 
 
-router.route("/createorder").post(verifyJWT, createOrder);
+router.route("/createorder").post(createOrder);
 
-router.route("/getorders").get(verifyJWT, getOrders);
+router.route("/getorders").post(getOrders);
 
-router.route("/verify").post(verifyJWT, verifyPayment);
+router.route("/verify").post(verifyPayment);
 
-router.route("/getorderbyid/:id").get(verifyJWT, getOrderById);
+router.route("/getorderbyid/:id").get(getOrderById);
 
-router.route("/deleteorder/:id").delete(verifyJWT, deleteOrder);
+router.route("/deleteorder/:id").delete(deleteOrder);
 
-router.route("/getallorders").get(verifyJWT, getAllOrders);
+router.route("/getallorders").get(getAllOrders);
 
-router.route("/updateorderstatus/:orderId").put(verifyJWT, updateOrderstatus);
+router.route("/updateorderstatus/:orderId").put(updateOrderstatus);
 
 
 export default router
