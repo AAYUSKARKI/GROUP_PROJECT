@@ -4,8 +4,10 @@ import banner1 from "../../../../assests/banner3.jpeg";
 import banner2 from "../../../../assests/banner4.jpeg";
 import bigbanner1 from "../../../../assests/homebanner.jpeg";
 import bigbanner2 from "../../../../assests/banner2.jpeg";
+import { useSelector } from "react-redux";
 
 function HomeDisplay() {
+  const {theme} = useSelector((state : any) => state.theme);
   const [currentImage, setCurrentImage] = useState(0);
 
   const DesktopImages = [bigbanner1, bigbanner2, banner1, banner2];
@@ -29,9 +31,9 @@ function HomeDisplay() {
   }, [currentImage]);
 
   return (
-    <div className="hidden md:flex">
+    <div className={`${theme === 'dark' ? 'bg-slate-950' : 'bg-white'} hidden md:flex`}>
     <div className="container mt-2">
-      <div className="flex flex-col gap-8 justify-center h-[70vh] bg-white p-5 ">
+      <div className={`flex flex-col gap-8 justify-center h-[70vh] ${theme === 'dark' ? 'bg-slate-950' : 'bg-white'} p-5`}>
         <div className="flex gap-2  ">
           <div className=" h-60 w-full">
             <img src={banner1} alt="" className="h-full w-full object-fill" />

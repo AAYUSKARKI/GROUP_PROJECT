@@ -4,7 +4,8 @@ import {Apierror} from "../utils/apierror.js";
 import {Apiresponse} from "../utils/apiresponse.js";
 
 const createCart = asynchandler(async (req, res) => {
-    const { quantity, product, userid } = req.body;
+    const { product, userid } = req.body;
+    const quantity = 1;
     console.log(req.body);
     const user = userid;
 

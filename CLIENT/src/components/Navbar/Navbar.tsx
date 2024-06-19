@@ -12,7 +12,7 @@ import { setuser } from "@/redux/userSlice";
 import Theme from "../Theme/Theme";
 // import useGetgoogleloginuser from "@/hooks/useGetgoogleloginuser";
 function Navbar() {
-
+  const {theme} = useSelector((state : any) => state.theme);
   const dispatch = useDispatch()
 
   // const googleloginuser = useGetgoogleloginuser()
@@ -141,21 +141,21 @@ function Navbar() {
 
   return (
   <>
-  <div className="sticky top-0 z-50 bg-white border-b-2 border-slate-200 p-2 flex justify-between">
+  <div className={`${theme === 'light' ? 'bg-white border-b-2 border-slate-200':'bg-slate-950 text-white border-slate-900'}sticky top-0 z-50  p-2 flex justify-between`}>
     <div className="flex flex-col py-2 px-2 ml-8 ">
-        <p className="text-2xl text-black font-bold "><Link to={"/"}>Lucid Merch</Link></p>
-        <p className="text-xs text-black font-bold">" Merch for Nerds "</p>
+        <p className={` ${theme === 'light' ? 'text-black':'text-white'} text-2xl font-bold `}><Link to={"/"}>Lucid Merch</Link></p>
+        <p className={`text-xs ${theme === 'light' ? 'text-black':'text-white'} font-bold`}>" Merch for Nerds "</p>
     </div>
     <div className="hidden md:flex items-center gap-10 ">
         <ul className="flex gap-[2.5rem] mr-[52px]">
             {links.map((link) => (
-                <li key={link.name} className="cursor-pointer text-2xl text-black hover:text-slate-500 ">
+                <li key={link.name} className={`${theme === 'light' ? 'text-black':'text-white'}cursor-pointer text-2xl hover:text-slate-500 `}>
                     <Link to={link.link}>{link.name}</Link>
                 </li>
             ))}
             {
               user ? user?.user?.role === "admin" && (
-                <li className="cursor-pointer text-2xl text-black hover:text-slate-500 ">
+                <li className={`${theme === 'light' ? 'text-black':'text-white'}cursor-pointer text-2xl  hover:text-slate-500`}>
                   <Link to={'/admin'}>Admin</Link>
                 </li>
               ): null
@@ -173,7 +173,7 @@ function Navbar() {
               id="search"
               value={search}
               onBlur={handleInputBlur} 
-              className="w-[300px] p-1 rounded-md border text-black appearance-none bg-[#ffffff] border-black focus:outline-none focus:shadow-outline" 
+              className="w-[300px] p-1 rounded-md border text-black appearance-none border-black focus:outline-none focus:shadow-outline" 
               onChange={handleSearch}
               />
               <ul className="absolute bg-white p-2 w-[300px] rounded-md text-black border-black flex flex-col gap-1 mt-1">
@@ -250,8 +250,8 @@ function Navbar() {
               </li>
             ))}
             {user && user.user?.role === "admin" && (
-              <li className="cursor-pointer text-xl text-black hover:text-slate-500">
-                <Link to={'/admin'} onClick={() => setIsMobileMenuOpen(false)}>Admin</Link>
+              <li className={`${theme === 'light' ? 'text-black':'text-white'}cursor-pointer text-2xl hover:text-slate-500 `}>
+                <Link className={`${theme === 'light' ? 'text-black':'text-white'}cursor-pointer text-2xl hover:text-slate-500 `} to={'/admin'} onClick={() => setIsMobileMenuOpen(false)}>Admin</Link>
               </li>
             )}
           </ul>
@@ -281,10 +281,10 @@ function Navbar() {
                   </div>
                 ) : (
                   <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
-                    <li className="cursor-pointer text-xl text-black hover:text-slate-500">
+                    <li className={`cursor-pointer text-xl ${theme === 'light' ? 'text-black':'text-white'} hover:text-slate-500`}>
                   <Link to={"/login"}>Login</Link>
                 </li>
-                <li className="cursor-pointer text-xl text-black hover:text-slate-500">
+                <li className={` cursor-pointer text-xl ${theme === 'light' ? 'text-black':'text-white'} hover:text-slate-500`}>
                   <Link to={"/register"}>Register</Link>
                 </li>
                   </div>

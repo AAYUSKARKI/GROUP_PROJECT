@@ -21,7 +21,7 @@ interface Product {
   size: string[]
 }
 function Home() {
-
+  const {theme} = useSelector((state : any) => state.theme);
 
     useGetallproducts()
   
@@ -32,7 +32,7 @@ function Home() {
   const Electronicsitems= products?.filter((product : Product) => product.category.includes("Electronics")).slice(0, 4)
   return (
    <>
-   <div className="flex flex-col items-center justify-center">
+   <div className={`${theme === 'light' ? 'bg-slate-50' : 'bg-slate-950'} flex flex-col items-center justify-center`}>
    <Category/>
    <HomeDisplay/>
    {Fashionitems && <h1 className="text-3xl font-bold underline text-left text-slate-900 dark:text-slate-50">Fashion</h1>}

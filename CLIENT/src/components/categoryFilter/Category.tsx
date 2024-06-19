@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 interface Product {
     _id: string;
@@ -15,6 +16,7 @@ interface Product {
 }
 
 function Category() {
+  const {theme} = useSelector((state : any) => state.theme);
     const navigate = useNavigate()
     const [filteredData, setFilteredData] = useState([] as Product[]);
     const categoriesList = [
@@ -42,11 +44,11 @@ function Category() {
         }
       };
   return (
-    <div className="hidden md:flex justify-center items-center gap-8 bg-slate-600 p-2">
+    <div className={`${theme==="light"?"bg-slate-50":"bg-slate-950"} hidden md:flex justify-center items-center gap-2 lg:gap-8 p-2 w-full`}>
         {
             categoriesList.map((category) => (
-                <div className=" p-2 rounded-md" key={category}>
-                    <p onClick={() => getProductsByCategory(category)} className="text-white hover:scale-110 cursor-pointer tracking-wide">{category}</p>
+                <div className="p-2 rounded-md" key={category}>
+                    <p onClick={() => getProductsByCategory(category)} className={`${theme==="light"?"text-black":"text-white"} hover:text-blue-500 hover:scale-110 cursor-pointer tracking-wide`}>{category}</p>
                 </div>
             ))
         }
